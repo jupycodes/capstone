@@ -22,6 +22,8 @@ Class.belongsTo(ClassType, {
 ClassType.hasMany(Class, {
     foreignKey: 'classTypeId'
 })
+// Class.belongsToMany(User, {through: 'classRegistrations'});
+// User.belongsToMany(Class, {through: 'classRegistrations'});
 //create database connection
 config.authenticate().then(function(){
     console.log('Database is connected');
@@ -110,8 +112,13 @@ app.get('/classes/:classId', function(req,res){
     });
 });
 
-app.get('/classRegistrations', function(req,res){
-    ClassRegistration.findAll().then(function(result){
+app.get('/classRegistrations/:classId', function(req,res){
+    let id = req.params.classId;
+    let data = {
+        where: {classId: id},
+        // include: User //Sequelize eager loading error
+    }
+    ClassRegistration.findAll(data).then(function(result){
         res.send(result);
     }).catch(function(err){
         res.send(err);

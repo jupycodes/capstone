@@ -11,10 +11,12 @@
    1. [x] order by date newest to oldest
    2. [x] make sure only user's purchases are visible and not all (filter in index.js)
 9. [ ] settings page
-10. [ ] profile add photo
-11. [ ] change membership type after a purchase
-12. [ ] register user for class
-13. [ ] if membership is not unlimited, subtract one from punch pass with each new reg
-14. [ ] change waiver signed to 1 after a waiver is signed
+10. [ ] order class schedule by start time
+11. [ ] profile add photo
+12. [ ] change membership type after a purchase
+13. [ ] register user for class
+14. [ ] sequelize eager loading error when trying to view name of user associated with a class reg
+15. [ ] if membership is not unlimited, subtract one from punch pass with each new reg
+16. [ ] change waiver signed to 1 after a waiver is signed
     - what initiates a waiver signed? prob when creating a new account
-15. [ ] link class signups to calendar
+17. [ ] link class signups to calendar
