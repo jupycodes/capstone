@@ -1,0 +1,11 @@
+
+  <ion-card>
+    Day: {{ class.day }}<br>
+    Start Time: {{ class.startTime}}<br>
+    End Time: {{ class.endTime }}<br>
+    Class Name: {{ class.classType.name }}<br>
+    Description: {{ class.classType.description }}<br>
+    Max Limit: {{ class.classType.maxLimit }}<br>
+    <ion-button fill="clear" (click)="viewDetails(class.classId)">View</ion-button>
+  </ion-card>
+

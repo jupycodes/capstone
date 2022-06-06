@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Classes
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-row>
+    <ion-col>
+      <form [formGroup]="selectClassTypeForm">
+        <select class="form-control" formControlName="classType">
+          <option value="all" selected>Select Class Type</option>
+          <option *ngFor="let className of classTypes" [value]="className.name">{{className.name}}</option>
+        </select>
+      </form>
+    </ion-col>
+    <ion-col>
+      <form [formGroup]="selectDateForm">
+        <input type="date" class="form-control" formControlName="date" />
+      </form>
+    </ion-col>
+  </ion-row>
+
+  <div *ngFor="let _class of classes">
+    <ng-container *ngIf="this.selectDateForm.value.date === _class.day
+      && (this.selectClassTypeForm.value.classType === _class.classType.name
+      || this.selectClassTypeForm.value.classType === 'all')">
+        <app-class [class]="_class"></app-class>
+    </ng-container>
+  </div>
+</ion-content>

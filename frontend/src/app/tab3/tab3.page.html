@@ -1,0 +1,37 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-start">
+          <h3>Profile</h3>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="ion-text-end">
+          <ion-button fill="clear" (click)="viewSettings()">
+            <ion-icon name="settings-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <p>Current User</p>
+  <ion-card *ngIf="user !== null">
+    First Name: {{user.fName}} <br>
+    Last Name: {{user.lName}} <br>
+    Birthday: {{user.birthday}} <br>
+    Gender: {{user.gender}} <br>
+    Phone Number: {{user.phoneNumber}} <br>
+    Email: {{user.email}} <br><br>
+    Membership Type: {{user.activeMembership}}<br>
+    Waiver signed? {{user.waiverSigned}}
+  </ion-card>
+
+  <ion-button fill="clear" (click)="viewPurchases()">View Purchases</ion-button>
+
+
+
+</ion-content>

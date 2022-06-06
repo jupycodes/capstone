@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Workouts
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="selectDateForm">
+    <input type="date" class="form-control" formControlName="date"/>
+  </form>
+
+  <div *ngFor="let workout of workouts">
+    <div *ngIf="this.selectDateForm.value.date === workout.date">
+      {{workout.description}}
+    </div>
+  </div>
+
+
+</ion-content>

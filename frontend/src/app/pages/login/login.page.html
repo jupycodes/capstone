@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h2>Login</h2>
+<form [formGroup]="loginForm">
+    <div class="mb-3">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-control" formControlName="email">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-control" formControlName="password">
+    </div>
+
+    <button type="submit" class="btn btn-primary" (click)="login()">Submit</button>
+</form>
+
+  <ion-button fill="clear" (click)="register()">New User</ion-button>
+</ion-content>
+

@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>receipts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngFor='let purchase of purchases'>
+    <app-puchase [purchase]="purchase"></app-puchase>
+  </div>
+</ion-content>

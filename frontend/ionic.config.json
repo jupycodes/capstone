@@ -1,0 +1,7 @@
+{
+  "name": "capstone-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
