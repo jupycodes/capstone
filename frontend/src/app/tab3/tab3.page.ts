@@ -8,7 +8,7 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  user = JSON.parse(localStorage.getItem('currentUser')!)
+  user = JSON.parse(localStorage.getItem('currentUser')!);
 
   constructor(private navCtrl: NavController) {}
 

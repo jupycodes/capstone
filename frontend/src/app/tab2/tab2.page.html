@@ -13,7 +13,9 @@
 
   <div *ngFor="let workout of workouts">
     <div *ngIf="this.selectDateForm.value.date === workout.date">
-      <pre>{{workout.description}}</pre>
+      <ion-card>
+        <pre>{{workout.description}}</pre>
+      </ion-card>
     </div>
   </div>
 

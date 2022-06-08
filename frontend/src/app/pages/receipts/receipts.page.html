@@ -5,6 +5,7 @@
 </ion-header>
 
 <ion-content>
+  <ion-button fill="clear" (click)="goBack()">Back</ion-button>
   <div *ngFor='let purchase of purchases'>
     <app-puchase [purchase]="purchase"></app-puchase>
   </div>

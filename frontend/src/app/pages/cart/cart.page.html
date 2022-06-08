@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>cart</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button fill="clear" (click)="printPurchases()">Print</ion-button>
+  <ion-button fill="clear" (click)="goBack()">Back</ion-button>
+  <div *ngFor="let i of allPurchases">
+    <ion-card>
+      Type: {{i.purchase}}<br>
+      Cost: ${{i.price}}.00
+    </ion-card>
+  </div>
+  <ion-card>
+    Total: ${{totalCost}}.00
+  </ion-card>
+</ion-content>

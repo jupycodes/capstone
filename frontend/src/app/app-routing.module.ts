@@ -30,6 +30,10 @@ const routes: Routes = [
   },
   {
     path: 'class-details/:classId', component: ClassDetailViewComponent, canActivate: [AuthguardService]
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./pages/cart/cart.module').then( m => m.CartPageModule)
   }
 ];
 @NgModule({

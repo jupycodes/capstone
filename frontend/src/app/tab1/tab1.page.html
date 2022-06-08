@@ -24,6 +24,7 @@
     </ion-col>
   </ion-row>
 
+
   <div *ngFor="let _class of classes">
     <ng-container *ngIf="this.selectDateForm.value.date === _class.day
       && (this.selectClassTypeForm.value.classType === _class.classType.name
@@ -31,4 +32,5 @@
         <app-class [class]="_class"></app-class>
     </ng-container>
   </div>
+
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PurchaseService } from 'src/app/services/purchase.service';
+import {NavController} from "@ionic/angular";
 
 @Component({
   selector: 'app-receipts',
@@ -9,7 +10,7 @@ import { PurchaseService } from 'src/app/services/purchase.service';
 export class ReceiptsPage implements OnInit {
   purchases;
   user = JSON.parse(localStorage.getItem('currentUser')!);
-  constructor(private purchaseService: PurchaseService) { }
+  constructor(private purchaseService: PurchaseService, private navCtrl: NavController) { }
   ionViewWillEnter(){
     this.purchaseService.getPurchases(this.user.userId).subscribe((results) => {
       this.purchases = results;
@@ -19,6 +20,9 @@ export class ReceiptsPage implements OnInit {
     });
   }
   ngOnInit() {
+  }
+  goBack() {
+    this.navCtrl.navigateBack('/tabs/tab3');
   }
 
 }

@@ -7,5 +7,37 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
+  <ion-button fill="clear" (click)="goToCart()">
+    <ion-icon name="cart-outline"></ion-icon>
+  </ion-button>
+  <ion-card>
+    Single Drop-in<br>
+    $20<br>
+    <ion-button fill="clear" (click)="addToCart('single', 1,20)">Add to cart</ion-button>
+  </ion-card>
+  <ion-card>
+    5 Class Pass<br>
+    $90<br>
+    <ion-button fill="clear" (click)="addToCart('5class', 5,90)">Add to cart</ion-button>
+  </ion-card>
+  <ion-card>
+    10 Class Pass<br>
+    $165<br>
+    <ion-button fill="clear" (click)="addToCart('10class', 10,165)">Add to cart</ion-button>
+  </ion-card>
+  <ion-card>
+    Unlimited Membership<br>
+    $185/mo<br>
+    <ion-button fill="clear" (click)="addToCart('unlimited',99, 185)">Add to cart</ion-button>
+  </ion-card>
+  <ion-card>
+    Open Gym Only<br>
+    $130/mo<br>
+    <ion-button fill="clear" (click)="addToCart('openGym',99, 130)">Add to cart</ion-button>
+  </ion-card>
+  <ion-card>
+    1 Week Free Trial (First timers only<br>
+    $0<br>
+    <ion-button fill="clear" (click)="addToCart('freeTrial', 7,0)">Add to cart</ion-button>
+  </ion-card>
 </ion-content>

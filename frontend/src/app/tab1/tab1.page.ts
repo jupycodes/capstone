@@ -21,6 +21,7 @@ export class Tab1Page implements OnDestroy {
   ionViewWillEnter(){
     this.classesService.getClasses().subscribe((results) => {
       this.classes = results;
+      this.classes = this.classes.sort((a,b) => a.startTime - b.startTime);
     }, (err) => {
       console.log(err);
     });
@@ -30,7 +31,6 @@ export class Tab1Page implements OnDestroy {
       console.log(err);
     });
   }
-
   //filter by date
   ngOnInit() {
     this.selectDateForm = this.formBuilder.group({
@@ -40,7 +40,6 @@ export class Tab1Page implements OnDestroy {
     this.changeDate();
   }
   ngOnDestroy(): void {
-    // eslint-disable-next-line eqeqeq
       if (this.initialValue != this.selectDateForm.value) {
         this.changeDate();
       }
