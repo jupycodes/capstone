@@ -22,9 +22,8 @@ Class.belongsTo(ClassType, {
 ClassType.hasMany(Class, {
     foreignKey: 'classTypeId'
 })
-// Class.belongsToMany(User, {through: 'classRegistrations'});
-// User.belongsToMany(Class, {through: 'classRegistrations'});
 ClassRegistration.hasMany(User, {foreignKey: 'userId'})
+
 //create database connection
 config.authenticate().then(function(){
     console.log('Database is connected');
@@ -151,14 +150,7 @@ app.get('/users', function(req,res){
         res.send(err);
     });
 });
-// app.get('/user/:userId', function(req,res){
-//     var userId = req.params.userId
-//     User.findByPk(userId).then(function(result){
-//         res.send(result);
-//     }).catch(function(err){
-//         res.send(err);
-//     });
-// });
+
 app.get('/workouts', function(req,res){
    let data = {
        where: {},
@@ -202,14 +194,7 @@ app.post('/purchases', function(req,res){
         res.send(err);
     });
 });
-//delete this as the only way to create new users is through registration
-// app.post('/users', function(req,res){
-//     User.create(req.body).then(function(Result){
-//         res.redirect('/users');
-//     }).catch(function(err){
-//         res.send(err);
-//     });
-// });
+
 app.post('/workouts', function(req,res){
     Workout.create(req.body).then(function(Result){
         res.redirect('/workouts');
@@ -334,6 +319,26 @@ app.patch('/classes/:classId', function(req,res){
             }
             if (req.body.classTypeId !== undefined){
                 result.classTypeId = req.body.classTypeId;
+            }
+            result.save().then(function(){
+                res.send(result);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('Record does not exist')
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+//change user's membership type with new purchase
+app.post('/users/:userId', function(req,res){
+    const userId = req.params.userId;
+    User.findByPk(userId).then(function(result){
+        if(result){
+            if (req.body.activeMembership !== undefined){
+                result.activeMembership += parseInt(req.body.activeMembership);
             }
             result.save().then(function(){
                 res.send(result);

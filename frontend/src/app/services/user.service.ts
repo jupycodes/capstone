@@ -21,5 +21,9 @@ export class UserService {
   isAuthenticated(){
     return !!this.getCurrentUser();
   }
+  updateMembership(activeMembership){
+    const data = {activeMembership};
+    return this.httpClient.post(`http://localhost:3000/users/${this.getCurrentUser().userId}`,data);
+  }
 
 }

@@ -13,15 +13,15 @@
 9. [ ] settings page
 10. [x] order class schedule by start time
 11. [ ] profile add photo
-12. [ ] change membership type after a purchase
-13. [x] register user for class
+12. [x] change membership type after a purchase
+13. [ ] change membership after class signup
+14. [x] register user for class
     1. [x] fix html registration button to have classDetails.classId and userId as inputs
-14. [x] make registration button inactive if current time > class start time class detail view is authguarded
-15. [x] sequelize eager loading error when trying to view name of user associated with a class reg
-16. [ ] if membership is not unlimited, subtract one from punch pass with each new reg
-17. [ ] change waiver signed to 1 after a waiver is signed
+15. [x] make registration button inactive if current time > class start time class detail view is authguarded
+16. [x] sequelize eager loading error when trying to view name of user associated with a class reg
+18. [ ] change waiver signed to 1 after a waiver is signed
     - what initiates a waiver signed? prob when creating a new account
-18. [ ] link class signups to calendar
-19. [x] receipts page back button
-20. [ ] how to view tab menu when on a non-tab page?
-21. [ ] register needs to be for a specific date, not just weekday class
+19. [ ] link class signups to calendar
+20. [x] receipts page back button
+21. [ ] how to view tab menu when on a non-tab page?
+22. [ ] register needs to be for a specific date, not just weekday class
