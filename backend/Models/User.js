@@ -48,6 +48,10 @@ const User = config.define('users', {
         type: Sequelize.INTEGER,
         allowNull: false
     },
+    membershipType: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
 }, {timestamps:false});
 
 module.exports = User;

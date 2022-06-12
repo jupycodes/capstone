@@ -19,7 +19,8 @@ export class RegisterPage implements OnInit {
       confirmPassword: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       birthday: [''],
-      gender: ['']
+      gender: [''],
+      acceptTerms:['']
     }, {validator: this.checkPasswords});
    }
    checkPasswords(group: FormGroup) {
@@ -39,6 +40,9 @@ export class RegisterPage implements OnInit {
       console.log(err);
     });
     this.navCtrl.back();
+  }
+  goBack(){
+    this.navCtrl.navigateBack('login');
   }
 
 }

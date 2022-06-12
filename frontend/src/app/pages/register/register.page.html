@@ -7,6 +7,7 @@
   </ion-header>
 
   <ion-content [fullscreen]="true">
+    <ion-button type="submit" fill="clear" (click)="goBack()">Back</ion-button>
       <h2>Register</h2>
 <form [formGroup]="registerForm">
     <div class="mb-3">
@@ -49,7 +50,12 @@
       <option value="undisclosed">Prefer not to disclose</option>
   </select>
 </div>
-
-    <button type="submit" class="btn btn-primary" (click)="register()">Submit</button>
+  <div>
+    <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-control"/>
+    <label for="acceptTerms" class="form-check-label">I agree to the <a [routerLink]="['/waiver']">Terms & Conditions</a></label>
+  </div>
+  <div>
+    <ion-button type="submit" fill="clear" (click)="register()">Submit</ion-button>
+  </div>
 </form>
   </ion-content>

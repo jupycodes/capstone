@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit} from '@angular/core';
 import { ClassesService } from '../services/classes.service';
 import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {ClassTypeService} from "../services/class-type.service";
+import {FilterDateService} from "../services/filter-date.service";
 
 
 @Component({
@@ -12,12 +13,20 @@ import {ClassTypeService} from "../services/class-type.service";
 export class Tab1Page implements OnDestroy {
   classes;
   classTypes;
-  public initialValue;
+  initialValue;
+  filterDate;
   selectDateForm: FormGroup;
   selectClassTypeForm: FormGroup =new FormGroup({
     classType: new FormControl('all')
   });
-  constructor(private classesService: ClassesService, private classTypeService: ClassTypeService, private formBuilder: FormBuilder) {}
+  constructor(private classesService: ClassesService,
+              private classTypeService: ClassTypeService,
+              private formBuilder: FormBuilder,
+              private filterDateService: FilterDateService) {
+    this.filterDate = new Date().toISOString().substring(0, 10);
+    console.log(this.filterDate);
+    filterDateService.getDate(this.filterDate);
+  }
   ionViewWillEnter(){
     this.classesService.getClasses().subscribe((results) => {
       this.classes = results;
@@ -37,6 +46,7 @@ export class Tab1Page implements OnDestroy {
       date: new Date().toLocaleString('en-us', {  weekday: 'long' })
     });
     this.initialValue = this.selectDateForm.value.date;
+    // console.log(new Date().toISOString().substring(0, 10));
     this.changeDate();
   }
   ngOnDestroy(): void {
@@ -49,6 +59,9 @@ export class Tab1Page implements OnDestroy {
       const n = new Date(val.date);
       const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
       this.selectDateForm.value.date = weekday[n.getDay()+1];
+      this.filterDate = n.toISOString().substring(0, 10);
+      console.log(this.filterDate);
+      this.filterDateService.getDate(this.filterDate);
     });
   }
 

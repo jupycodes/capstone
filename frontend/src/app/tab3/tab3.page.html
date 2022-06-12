@@ -19,15 +19,16 @@
 
 <ion-content [fullscreen]="true">
   <p>Current User</p>
-  <ion-card *ngIf="user !== null">
-    First Name: {{user.fName}} <br>
-    Last Name: {{user.lName}} <br>
-    Birthday: {{user.birthday}} <br>
-    Gender: {{user.gender}} <br>
-    Phone Number: {{user.phoneNumber}} <br>
-    Email: {{user.email}} <br><br>
-    Passes Available: {{user.activeMembership}}<br>
-    Waiver signed? {{user.waiverSigned}}
+  <ion-card>
+    First Name: {{user?.fName}} <br>
+    Last Name: {{user?.lName}} <br>
+    Birthday: {{user?.birthday}} <br>
+    Gender: {{user?.gender}} <br>
+    Phone Number: {{user?.phoneNumber}} <br>
+    Email: {{user?.email}} <br><br>
+    Membership Type: {{user?.membershipType}}<br>
+    Passes Available: {{user?.activeMembership}}<br>
+    Waiver signed? {{user?.waiverSigned}}
   </ion-card>
 
   <ion-button fill="clear" (click)="viewPurchases()">View Purchases</ion-button>

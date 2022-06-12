@@ -7,8 +7,8 @@ import {Iworkouts} from '../interfaces/iworkouts';
 export class WorkoutService {
 
   constructor(private httpClient: HttpClient) { }
-  
+
   getWorkouts() {
-    return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts`)
+    return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts`);
   }
 }

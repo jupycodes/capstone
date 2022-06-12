@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import {UserService} from '../services/user.service';
 
 
 @Component({
@@ -8,17 +9,27 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  user = JSON.parse(localStorage.getItem('currentUser')!);
+  localUser = JSON.parse(localStorage.getItem('currentUser')!);
+  user;
+  constructor(private navCtrl: NavController,
+              private userService: UserService) {
+    userService.matchCurrentUser(this.localUser.userId).subscribe((results) => {
+      this.user = results;
+      // console.log(this.user);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+  ionViewWillEnter() {
 
-  constructor(private navCtrl: NavController) {}
-
+  }
   viewPurchases(){
     this.navCtrl.navigateForward('receipts');
   }
   viewSettings(){
     this.navCtrl.navigateForward('settings');
   }
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
 }

@@ -18,12 +18,15 @@ export class UserService {
   getCurrentUser(){
     return JSON.parse(localStorage.getItem('currentUser')!);
   }
+  matchCurrentUser(userId){
+    return this.httpClient.get<IUsers>(`http://localhost:3000/users/${userId}`);
+  }
   isAuthenticated(){
     return !!this.getCurrentUser();
   }
-  updateMembership(activeMembership){
-    const data = {activeMembership};
-    return this.httpClient.post(`http://localhost:3000/users/${this.getCurrentUser().userId}`,data);
+  updateMembership(activeMembership, membershipType){
+    const data = {activeMembership, membershipType};
+    return this.httpClient.patch(`http://localhost:3000/users/${this.getCurrentUser().userId}`,data);
   }
 
 }

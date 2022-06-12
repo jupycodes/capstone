@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
       alert('incorrect email/password');
       console.log(err);
     });
-    this.navCtrl.back();
+    this.navCtrl.navigateForward('/tabs/tab1');
   }
   register() {
     this.navCtrl.navigateForward('register');

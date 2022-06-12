@@ -9,6 +9,7 @@ export interface IUsers {
     gender: string;
     waiverSigned: number;
     activeMembership: number;
-    isAdmin:number
+    isAdmin: number;
+    membershipType: string;
 }
 

@@ -43,9 +43,10 @@ app.post('/register', function(req, res){
             phoneNumber: req.body.phoneNumber,
             birthday: req.body.birthday,
             gender: req.body.gender,
-            waiverSigned: 0,
+            waiverSigned: 1,
             activeMembership: 0,
-            isAdmin: 0
+            isAdmin: 0,
+            membershipType: 'none'
         };
         User.create(user_data).then((result) => {
             res.status(200).send(result);
@@ -145,6 +146,14 @@ app.get('/purchases/:userId', function(req,res){
 });
 app.get('/users', function(req,res){
     User.findAll().then(function(result){
+        res.send(result);
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+app.get('/users/:userId', function(req,res){
+    let userId = req.params.userId;
+    User.findByPk(userId).then(function(result){
         res.send(result);
     }).catch(function(err){
         res.send(err);
@@ -333,16 +342,31 @@ app.patch('/classes/:classId', function(req,res){
     });
 });
 //change user's membership type with new purchase
-app.post('/users/:userId', function(req,res){
+app.patch('/users/:userId', function(req,res){
     const userId = req.params.userId;
     User.findByPk(userId).then(function(result){
-        if(result){
-            if (req.body.activeMembership !== undefined){
+        if (result) {
+            const currentMembershipType = result.membershipType
+            if (req.body.activeMembership !== undefined) {
                 result.activeMembership += parseInt(req.body.activeMembership);
             }
-            result.save().then(function(){
-                res.send(result);
-            }).catch(function(err){
+            if (req.body.membershipType !== undefined) {
+                result.membershipType = req.body.membershipType;
+                if (req.body.membershipType === 'unlimited' || req.body.membershipType === 'openGym') {
+                    console.log(currentMembershipType)
+                    console.log(result.membershipType)
+                    setTimeout(function () {
+                        result.membershipType = currentMembershipType
+                        console.log('30 days')
+                        result.save().then(function () {
+                            // res.send(result)
+                        })
+                    }, 2592000000)
+                }
+            }
+            result.save().then(function () {
+                // res.send(result);
+            }).catch(function (err) {
                 res.send(err);
             });
         } else {
