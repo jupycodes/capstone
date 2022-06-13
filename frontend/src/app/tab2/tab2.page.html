@@ -17,7 +17,29 @@
         <pre>{{workout.description}}</pre>
       </ion-card>
     </div>
+
   </div>
+  <div *ngIf="this.localUser.isAdmin === 1">
+    <ion-button fill="clear" (click)="showAddForm()">Add/Edit Workout</ion-button>
+    <div *ngIf="showForm">
+      <form [formGroup]="adminAddNewForm">
+        <div class="mb-3">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" formControlName="date">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <input type="text" class="form-control" formControlName="description">
+        </div>
+        <div>
+          <ion-button type="submit" fill="clear" (click)="addNew()">Add New</ion-button>
+          <ion-button type="submit" fill="clear" (click)="edit()">Edit Existing</ion-button>
+        </div>
+      </form>
+    </div>
+  </div>
+
 
 
 </ion-content>

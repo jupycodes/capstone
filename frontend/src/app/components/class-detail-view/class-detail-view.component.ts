@@ -18,6 +18,7 @@ export class ClassDetailViewComponent implements OnInit {
   localUser = JSON.parse(localStorage.getItem('currentUser')!);
   user;
   classDate;
+
   constructor(private navCtrl: NavController,
               private classesService: ClassesService,
               private activatedRoute: ActivatedRoute,
@@ -32,7 +33,7 @@ export class ClassDetailViewComponent implements OnInit {
     }, (err) => {
       console.log(err);
     });
-    this.classDate = filterDateService.sendDate()
+    this.classDate = filterDateService.sendDate();
   }
 
   async showAlert() {
@@ -95,16 +96,24 @@ export class ClassDetailViewComponent implements OnInit {
   goBack() {
     this.navCtrl.navigateBack('/tabs/tab1');
   }
+  canRegister() {
+    const classTime = this.classDate + ' ' + this.classDetails[0].startTime;
+    const currentTime = (new Date()).toISOString().substring(0, 10) + ' ' + (new Date()).toTimeString().substring(0, 8);
+    return currentTime < classTime;
+  }
 
-  async register(classId, userId, date) {
-    if (this.user.membershipType === 'punchPass') {
-      this.userService.updateMembership(-1, this.user.membershipType).subscribe(() => {
-        console.log(this.user);
-      });
-    }
-    if (this.user.membershipType === 'none' || (this.user.membershipType === 'punchPass' && this.user.activeMembership === 0)) {
-      await this.showAlert();
-    } else if (this.user.membershipType === 'openGym' && this.classDetails[0].classType.name !== 'Open Gym') {
+
+  async register(classId, userId) {
+    console.log(this.canRegister());
+    if (this.canRegister() === true) {
+      if (this.user.membershipType === 'punchPass') {
+        this.userService.updateMembership(-1, this.user.membershipType).subscribe(() => {
+          console.log(this.user);
+        });
+      }
+      if (this.user.membershipType === 'none' || (this.user.membershipType === 'punchPass' && this.user.activeMembership === 0)) {
+        await this.showAlert();
+      } else if (this.user.membershipType === 'openGym' && this.classDetails[0].classType.name !== 'Open Gym') {
         await this.openGymAlert();
       } else {
         this.classRegService.register(classId, userId, this.classDate).subscribe(() => {
@@ -113,4 +122,5 @@ export class ClassDetailViewComponent implements OnInit {
         });
       }
     }
+  }
 }

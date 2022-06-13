@@ -20,9 +20,6 @@ export class Tab3Page implements OnInit {
       console.log(err);
     });
   }
-  ionViewWillEnter() {
-
-  }
   viewPurchases(){
     this.navCtrl.navigateForward('receipts');
   }

@@ -197,16 +197,16 @@ app.post('/classTypes', function(req,res){
     });
 });
 app.post('/purchases', function(req,res){
-    Purchase.create(req.body).then(function(Result){
-        res.redirect('/purchases');
+    Purchase.create(req.body).then(function(result){
+        res.send(result);
     }).catch(function(err){
         res.send(err);
     });
 });
 
 app.post('/workouts', function(req,res){
-    Workout.create(req.body).then(function(Result){
-        res.redirect('/workouts');
+    Workout.create(req.body).then(function(result){
+        res.send(result)
     }).catch(function(err){
         res.send(err);
     });
@@ -341,6 +341,29 @@ app.patch('/classes/:classId', function(req,res){
         res.send(err);
     });
 });
+//edit workout details (admin users only)
+app.patch('/workouts/:date',function(req,res){
+    const date = req.params.date
+    let data = {
+        where: {date}
+    }
+    Workout.findAll(data).then(function(result){
+        if (result) {
+            if (req.body.description !== undefined) {
+                result[0].description = req.body.description
+            }
+            result[0].save().then(function(){
+                res.send(result[0]);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('record does not exist')
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+})
 //change user's membership type with new purchase
 app.patch('/users/:userId', function(req,res){
     const userId = req.params.userId;
@@ -377,7 +400,5 @@ app.patch('/users/:userId', function(req,res){
     });
 });
 
-//create a patch to edit waiver signed
-//create a patch to edit if valid membership
-//create a patch to edit if is an admin user (?)
+
 

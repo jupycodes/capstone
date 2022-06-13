@@ -1,18 +1,17 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>settings</ion-title>
+    <ion-button fill="clear" (click)="goBack()">Back</ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ul>
-  <li>notification settings</li>
-  <li>change contact details (edit profile)</li>
-  <li>change password</li>
-  <li>calendar sync?</li>
-  <li>payment method?</li>
-  <li>privacy settings?</li>
-</ul>
-  <ion-button fill="clear" (click)="logout()">Logout</ion-button>
-  <ion-button fill="clear" (click)="goBack()">Back</ion-button>
+
+  <ion-button fill="clear" (click)="fakeButton()">Notification Settings</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Edit Profile</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Change Password</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Calendar Settings</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Privacy Settings</ion-button><br>
+  <ion-button fill="clear" (click)="logout()">Logout</ion-button><br>
+
 </ion-content>

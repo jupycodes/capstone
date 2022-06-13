@@ -6,7 +6,7 @@
 
 <ion-content>
   <ion-button fill="clear" (click)="goBack()">Back</ion-button>
-  <ion-button fill="clear" (click)="register(classDetails[0].classId,user.userId, 'date')">Register</ion-button>
+  <ion-button fill="clear" (click)="register(classDetails[0].classId,user.userId)">Register</ion-button>
   <div *ngIf="classDetails">
     Name: {{classDetails[0].classType.name}}<br>
     Description: {{classDetails[0].classType.description}}<br>
@@ -15,6 +15,5 @@
     End Time: {{classDetails[0].endTime}}<br>
     Date: {{classDate}}
   </div>
-  <ion-button fill="clear" (click)="showAlert()">Alert</ion-button>
 
 </ion-content>

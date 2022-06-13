@@ -11,4 +11,10 @@ export class WorkoutService {
   getWorkouts() {
     return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts`);
   }
+  createWorkout(formData: object) {
+    return this.httpClient.post<Iworkouts[]>(`http://localhost:3000/workouts`, formData);
+  }
+  editWorkout(formData, date) {
+    return this.httpClient.patch<Iworkouts[]>(`http://localhost:3000/workouts/${date}`, formData);
+  }
 }

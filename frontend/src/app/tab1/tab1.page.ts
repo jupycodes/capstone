@@ -24,7 +24,7 @@ export class Tab1Page implements OnDestroy {
               private formBuilder: FormBuilder,
               private filterDateService: FilterDateService) {
     this.filterDate = new Date().toISOString().substring(0, 10);
-    console.log(this.filterDate);
+    // console.log(this.filterDate);
     filterDateService.getDate(this.filterDate);
   }
   ionViewWillEnter(){
@@ -46,6 +46,7 @@ export class Tab1Page implements OnDestroy {
       date: new Date().toLocaleString('en-us', {  weekday: 'long' })
     });
     this.initialValue = this.selectDateForm.value.date;
+    // console.log(this.selectDateForm.value.date)
     // console.log(new Date().toISOString().substring(0, 10));
     this.changeDate();
   }
@@ -57,10 +58,13 @@ export class Tab1Page implements OnDestroy {
   changeDate() {
     this.selectDateForm.valueChanges.subscribe(val => {
       const n = new Date(val.date);
-      const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-      this.selectDateForm.value.date = weekday[n.getDay()+1];
+      const weekday = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+      this.selectDateForm.value.date = weekday[n.getDay()];
+      // console.log(n.getDay())
+      // console.log(weekday[n.getDay()])
+      // console.log(this.selectDateForm.value.date)
       this.filterDate = n.toISOString().substring(0, 10);
-      console.log(this.filterDate);
+      // console.log(this.filterDate);
       this.filterDateService.getDate(this.filterDate);
     });
   }

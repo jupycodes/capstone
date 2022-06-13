@@ -20,4 +20,7 @@ export class SettingsPage implements OnInit {
   goBack() {
     this.navCtrl.navigateBack('/tabs/tab3')
   }
+  fakeButton(){
+    console.log('hi!')
+  }
 }

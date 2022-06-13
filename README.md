@@ -29,3 +29,4 @@
     1. [ ] fix bug on page refresh -need to?
 23. [ ] profile page have to refresh to see changes to user membership why?
 24. [ ] new user registration implement validators and disable/enable submit button
+25. [x] mock payment form

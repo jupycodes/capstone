@@ -9,11 +9,39 @@
   <div *ngFor="let i of allPurchases">
     <ion-card>
       Type: {{i.purchase}}<br>
-      Cost: ${{i.price}}.00
+      Cost: ${{i.price}}.00<br>
+      <ion-button fill="clear" (click)="deletePurchase(allPurchases.indexOf(i))">Delete</ion-button>
     </ion-card>
   </div>
   <div>
     Total: ${{totalCost}}.00
   </div>
-  <ion-button fill="clear" (click)="processPayment(this.totalInstances, this.type)">Pay Now</ion-button>
+
+  <form [formGroup]="paymentForm">
+    <div class="mb-3">
+      <label class="form-label">Name on card</label>
+      <input type="text" class="form-control" formControlName="name">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Card number</label>
+      <input type="text" class="form-control" formControlName="cardNumber">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Expiry date</label>
+      <input type="text" class="form-control" formControlName="expiry">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Security Code</label>
+      <input type="text" class="form-control" formControlName="securityCode">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">ZIP/Postal Code</label>
+      <input type="text" class="form-control" formControlName="postalCode">
+    </div>
+  </form>
+  <ion-button fill="clear" [disabled]="!paymentForm.valid" (click)="processPayment(this.totalInstances, this.type)">Pay Now</ion-button>
 </ion-content>
