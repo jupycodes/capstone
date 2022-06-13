@@ -1,11 +1,23 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Class Detailed View Component</ion-title>
+    <ion-row>
+      <ion-col>
+        <div >
+          <h2>Class Details</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="ion-text-end">
+          <ion-button color='white' (click)="goBack()">Back</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button fill="clear" (click)="goBack()">Back</ion-button>
+
   <ion-button fill="clear" (click)="register(classDetails[0].classId,user.userId)">Register</ion-button>
   <div *ngIf="classDetails">
     Name: {{classDetails[0].classType.name}}<br>

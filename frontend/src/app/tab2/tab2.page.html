@@ -1,7 +1,7 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-title>
-      Workouts
+      <h2>Workouts</h2>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -11,11 +11,9 @@
     <input type="date" class="form-control" formControlName="date"/>
   </form>
 
-  <div *ngFor="let workout of workouts">
+  <div class="description" *ngFor="let workout of workouts">
     <div *ngIf="this.selectDateForm.value.date === workout.date">
-      <ion-card>
         <pre>{{workout.description}}</pre>
-      </ion-card>
     </div>
 
   </div>

@@ -3,8 +3,30 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-tab-bar-background: #87222A;
+  ion-toolbar {
+    --min-height: 65px;
+    --color: #ffffff;
+    --background: #87222A;
+    --margin-bottom: 16px;
+  }
+  ion-card {
+    background-color: #e6e6e6;
+    margin: 6px;
+    padding-top: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    border-radius: 0px;
+    border: 1px solid #383a3e;
+    font-size: 18px;
+  }
+  ion-col {
+    margin: 0px;
+  }
+
+
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #87222A;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
