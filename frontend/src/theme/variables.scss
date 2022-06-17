@@ -8,10 +8,10 @@
     --min-height: 65px;
     --color: #ffffff;
     --background: #87222A;
-    --margin-bottom: 16px;
+    --margin-bottom: 24px;
   }
   ion-card {
-    background-color: #e6e6e6;
+    background-color: #f2f2f2;
     margin: 6px;
     padding-top: 6px;
     padding-left: 6px;
@@ -23,6 +23,12 @@
   ion-col {
     margin: 0px;
   }
+  ion-button {
+    box-shadow: none;
+  }
+  ion-header {
+    margin-bottom: 24px;
+  }
 
 
   /** primary **/
@@ -30,8 +36,8 @@
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #621D1D;
+  --ion-color-primary-tint: #B53F3F;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -103,7 +109,6 @@
    * Dark Colors
    * -------------------------------------------
    */
-
   body {
     --ion-color-primary: #428cff;
     --ion-color-primary-rgb: 66,140,255;

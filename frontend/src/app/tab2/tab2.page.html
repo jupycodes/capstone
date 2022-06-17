@@ -1,43 +1,46 @@
 <ion-header [translucent]="false">
   <ion-toolbar>
-    <ion-title>
-      <h2>Workouts</h2>
-    </ion-title>
+    <ion-row>
+      <ion-col>
+        <div>
+          <h2>Workouts</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div *ngIf="this.localUser.isAdmin === 1" class="ion-text-end">
+          <ion-button color='white' (click)="showAddForm()">Edit</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <form [formGroup]="selectDateForm">
-    <input type="date" class="form-control" formControlName="date"/>
+    <input type="date" class="form-control-date" formControlName="date"/>
   </form>
-
   <div class="description" *ngFor="let workout of workouts">
     <div *ngIf="this.selectDateForm.value.date === workout.date">
         <pre>{{workout.description}}</pre>
     </div>
-
   </div>
   <div *ngIf="this.localUser.isAdmin === 1">
-    <ion-button fill="clear" (click)="showAddForm()">Add/Edit Workout</ion-button>
-    <div *ngIf="showForm">
-      <form [formGroup]="adminAddNewForm">
-        <div class="mb-3">
-          <label class="form-label">Date</label>
-          <input type="date" class="form-control" formControlName="date">
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Description</label>
-          <input type="text" class="form-control" formControlName="description">
-        </div>
-        <div>
-          <ion-button type="submit" fill="clear" (click)="addNew()">Add New</ion-button>
-          <ion-button type="submit" fill="clear" (click)="edit()">Edit Existing</ion-button>
-        </div>
-      </form>
-    </div>
+      <div *ngIf="showForm">
+          <form [formGroup]="adminAddNewForm">
+            <div class="mb-3">
+              <textarea class="form-control" formControlName="description" rows="10" cols="40"></textarea>
+            </div>
+            <div>
+              <div *ngIf="!singleWorkout">
+                <ion-button type="submit" (click)="addNew()">Add New</ion-button>
+              </div>
+              <div *ngIf="singleWorkout">
+                <ion-button type="submit" (click)="edit()">Edit Existing</ion-button>
+              </div>
+            </div>
+          </form>
+      </div>
   </div>
-
 
 
 </ion-content>

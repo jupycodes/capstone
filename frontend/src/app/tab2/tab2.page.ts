@@ -10,6 +10,7 @@ import { WorkoutService } from '../services/workout.service';
 })
 export class Tab2Page {
   workouts;
+  singleWorkout;
   selectDateForm: FormGroup;
   localUser = JSON.parse(localStorage.getItem('currentUser')!);
   user;
@@ -24,7 +25,6 @@ export class Tab2Page {
       console.log(err);
     });
     this.adminAddNewForm = formBuilder.group({
-      date: this.selectDateForm,
       description: ['']
     });
   }
@@ -41,9 +41,13 @@ export class Tab2Page {
   }
   showAddForm(){
     this.showForm = !this.showForm;
+    this.singleWorkout = this.workoutExists();
   }
   addNew() {
-    const formData = this.adminAddNewForm.value;
+    const formData = {
+      date: this.selectDateForm.value.date,
+      description: this.adminAddNewForm.value.description
+    };
     this.workoutService.createWorkout(formData).subscribe(()=>{
       console.log(formData);
       this.showForm = !this.showForm;
@@ -51,12 +55,24 @@ export class Tab2Page {
     }, (err) => {
       alert('error');
     });
+    window.location.reload();
   }
   edit(){
     const formData = this.adminAddNewForm.value;
-    this.workoutService.editWorkout(formData, formData.date).subscribe(() => {
+    const date = this.selectDateForm.value.date;
+    this.workoutService.editWorkout(formData, date).subscribe(() => {
       console.log(formData);
     });
+    window.location.reload();
+  }
+  workoutExists() {
+    const date = this.selectDateForm.value.date;
+    this.workoutService.getSingleWorkout(date).subscribe((results)=> {
+      this.singleWorkout = results;
+    }, (err)=> {
+      console.log(err);
+    });
+    return this.singleWorkout !== undefined;
   }
 
 }

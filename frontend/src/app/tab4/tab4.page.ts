@@ -9,6 +9,8 @@ import {PurchaseService} from "../services/purchase.service";
 })
 export class Tab4Page {
   public purchases = [] as any;
+  totalCost;
+  localUser = JSON.parse(localStorage.getItem('currentUser')!);
   constructor(private navCtrl: NavController,
               private toastCtrl: ToastController,
               private purchaseService: PurchaseService) {
@@ -33,6 +35,7 @@ export class Tab4Page {
       ]
     });
     await toast.present();
+    this.totalCost = this.purchases.map((obj) => obj.price).reduce((acc,val) => acc + val, 0);
   }
 
   goToCart() {
@@ -40,5 +43,13 @@ export class Tab4Page {
     this.navCtrl.navigateForward('cart');
     // this.navCtrl.navigateForward('cart', {state: {data: this.purchases}});
   }
+  // listPreviousPurchases(){
+  //   this.purchaseService.getPurchases(this.localUser.userId).subscribe((results) => {
+  //     const length = results;
+  //   }, (err) => {
+  //     console.log(err);
+  //   });
+  //   return length;
+  // }
 
 }

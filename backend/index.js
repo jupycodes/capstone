@@ -348,6 +348,9 @@ app.patch('/workouts/:date',function(req,res){
         where: {date}
     }
     Workout.findAll(data).then(function(result){
+        if (result[0] == null) {
+            console.log('no result')
+        }
         if (result) {
             if (req.body.description !== undefined) {
                 result[0].description = req.body.description
@@ -358,12 +361,53 @@ app.patch('/workouts/:date',function(req,res){
                 res.send(err);
             });
         } else {
-            res.send('record does not exist')
+            res.send('no result')
         }
     }).catch(function(err){
         res.send(err);
     });
 })
+//get single workout by date
+app.get('/workouts/:date',function(req,res){
+    const date = req.params.date
+    let data = {
+        where: {date}
+    }
+    Workout.findAll(data).then(function(result){
+        if (result[0] == null) {
+            console.log('no result')
+        }
+        if (result) {
+           res.send(result[0])
+        } else {
+            res.send('no result')
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+})
+// app.patch('/workouts/:workoutId',function(req,res){
+//     const workoutId = req.params.workoutId
+//     Workout.findByPk(workoutId).then(function(result){
+//         if (result) {
+//             if (req.body.date !== undefined){
+//                 result.date = req.body.date;
+//             }
+//             if (req.body.description !== undefined) {
+//                 result.description = req.body.description
+//             }
+//             result.save().then(function(){
+//                 res.send(result);
+//             }).catch(function(err){
+//                 res.send(err);
+//             });
+//         } else {
+//             res.send('record does not exist')
+//         }
+//     }).catch(function(err){
+//         res.send(err);
+//     });
+// })
 //change user's membership type with new purchase
 app.patch('/users/:userId', function(req,res){
     const userId = req.params.userId;

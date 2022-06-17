@@ -7,37 +7,77 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button fill="clear" size="large" (click)="goToCart()">
-    <ion-icon name="cart-outline"></ion-icon>
-  </ion-button>
+  <ion-row>
+    <ion-button fill="clear" size="large" (click)="goToCart()">
+      <ion-icon name="cart-outline"></ion-icon>
+    </ion-button>
+    <div *ngIf="this.totalCost" style="align-self: center;"><strong>Cart Total: ${{totalCost}}.00</strong></div>
+  </ion-row>
   <ion-card>
-    Single Drop-in<br>
-    $20<br>
-    <ion-button fill="clear" (click)="addToCart('punchPass', 1,20)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        Single Drop-in<br>
+        <strong>$20.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('punchPass', 1,20)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-card>
-    5 Class Pass<br>
-    $90<br>
-    <ion-button fill="clear" (click)="addToCart('punchPass', 5,90)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        5 Class Pass<br>
+        <strong>$90.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('punchPass', 5,90)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-card>
-    10 Class Pass<br>
-    $165<br>
-    <ion-button fill="clear" (click)="addToCart('punchPass', 10,165)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        10 Class Pass<br>
+        <strong>$165.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('punchPass', 10,165)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-card>
-    Unlimited Membership<br>
-    $185/mo<br>
-    <ion-button fill="clear" (click)="addToCart('unlimited',0, 185)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        1 Month Unlimited<br>
+        <strong>$185.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('unlimited',0, 185)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-card>
-    Open Gym Only<br>
-    $130/mo<br>
-    <ion-button fill="clear" (click)="addToCart('openGym',0, 130)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        1 Month Unlimited (Open Gym Only)<br>
+        <strong>$130.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('openGym',0, 185)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
   <ion-card>
-    1 Week Free Trial (First timers only)<br>
-    $0<br>
-    <ion-button fill="clear" (click)="addToCart('punchPass', 7,0)">Add to cart</ion-button>
+    <ion-row>
+      <ion-col>
+        1 Week Free Trial (First timers only)<br>
+        <strong>$0.00</strong>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="clear" (click)="addToCart('freeTrial', 7,0)" class="ion-float-right">Add to cart</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-card>
+
 </ion-content>

@@ -11,6 +11,9 @@ export class WorkoutService {
   getWorkouts() {
     return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts`);
   }
+  getSingleWorkout(date) {
+    return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts/${date}`);
+  }
   createWorkout(formData: object) {
     return this.httpClient.post<Iworkouts[]>(`http://localhost:3000/workouts`, formData);
   }

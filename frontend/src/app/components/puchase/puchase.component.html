@@ -1,7 +1,14 @@
-<p>
-  Purchase ID: {{purchase.purchaseId}}<br>
-  User ID: {{purchase.userId}}<br>
-  Purchase Type: {{purchase.type}}<br>
-  Price: ${{purchase.price}}.00<br>
-  Date: {{purchase.date}}<br>
-</p>
+<ion-card>
+  <!--  Purchase ID: {{purchase.purchaseId}}<br>-->
+  <!--  User ID: {{purchase.userId}}<br>-->
+  <ion-row>
+    <ion-col>
+      {{purchase.type}}<br>
+      <strong>${{purchase.price}}.00</strong>
+    </ion-col>
+    <ion-col>
+      <p class="ion-float-right">{{purchase.date}}</p>
+    </ion-col>
+  </ion-row>
+</ion-card>
+

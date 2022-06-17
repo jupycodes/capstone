@@ -34,5 +34,8 @@ export class ReceiptsPage implements OnInit {
   goBack() {
     this.navCtrl.navigateBack('/tabs/tab3');
   }
+  goToCart() {
+    this.navCtrl.navigateForward('/tabs/tab4');
+  }
 
 }
