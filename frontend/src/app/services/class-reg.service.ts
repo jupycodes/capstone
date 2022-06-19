@@ -11,4 +11,8 @@ export class ClassRegService {
     const data = {classId, userId, date};
     return this.httpClient.post(`http://localhost:3000/classRegistrations`, data);
   }
+  listSignUps(classId) {
+    return this.httpClient.get(`http://localhost:3000/classRegistrations/${classId}`);
+  }
+
 }

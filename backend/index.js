@@ -8,6 +8,7 @@ const User = require('./Models/User');
 const Workout = require('./Models/Workout');
 const Purchase = require('./Models/Purchase')
 const cors = require('cors');
+const cron = require('node-cron');
 const bcrypt = require('bcrypt');
 const saltRounds = 10
 
@@ -118,7 +119,7 @@ app.get('/classRegistrations/:classId', function(req,res){
     let id = req.params.classId;
     let data = {
         where: {classId: id},
-        include: User //Sequelize eager loading error
+        include: User
     }
     ClassRegistration.findAll(data).then(function(result){
         res.send(result);
@@ -420,15 +421,39 @@ app.patch('/users/:userId', function(req,res){
             if (req.body.membershipType !== undefined) {
                 result.membershipType = req.body.membershipType;
                 if (req.body.membershipType === 'unlimited' || req.body.membershipType === 'openGym') {
-                    console.log(currentMembershipType)
-                    console.log(result.membershipType)
-                    setTimeout(function () {
-                        result.membershipType = currentMembershipType
-                        console.log('30 days')
+                    // console.log(currentMembershipType)
+                    // console.log(result.membershipType)
+                    // setTimeout(function () {
+                    //     result.membershipType = currentMembershipType
+                    //     console.log('30 days')
+                    //     result.save().then(function () {
+                    //         // res.send(result)
+                    //     })
+                    // }, 2592000000)
+                    cron.schedule('* * */30 * *', () => {
+                        console.log('reset after 30 days');
+                        result.membershipType = currentMembershipType;
                         result.save().then(function () {
-                            // res.send(result)
+                            res.send(result)
                         })
-                    }, 2592000000)
+                    }, {
+                        scheduled: true,
+                        timezone: "America/Sao_Paulo"
+                    });
+                }
+                if (req.body.membershipType === 'freeTrial') {
+                    // console.log(currentMembershipType)
+                    // console.log(result.membershipType)
+                    cron.schedule('* * */7 * *', () => {
+                        console.log('reset after 7 days');
+                        result.membershipType = currentMembershipType;
+                        result.save().then(function () {
+                            res.send(result)
+                        })
+                    }, {
+                        scheduled: true,
+                        timezone: "America/Sao_Paulo"
+                    });
                 }
             }
             result.save().then(function () {

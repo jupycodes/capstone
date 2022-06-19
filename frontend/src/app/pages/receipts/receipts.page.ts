@@ -22,7 +22,7 @@ export class ReceiptsPage implements OnInit {
     });
   }
   ionViewWillEnter(){
-    this.purchaseService.getPurchases(this.user.userId).subscribe((results) => {
+    this.purchaseService.getPurchases(this.localUser.userId).subscribe((results) => {
       this.purchases = results;
       this.purchases = this.purchases.sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     }, (err) => {

@@ -7,9 +7,12 @@
         </div>
       </ion-col>
       <ion-col>
-        <div *ngIf="this.localUser.isAdmin === 1" class="ion-text-end">
-          <ion-button color='white' (click)="showAddForm()">Edit</ion-button>
+        <div *ngIf="localUser">
+          <div *ngIf="this.localUser.isAdmin === 1" class="ion-text-end">
+            <ion-button color='white' (click)="showAddForm()">Edit</ion-button>
+          </div>
         </div>
+
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -24,23 +27,28 @@
         <pre>{{workout.description}}</pre>
     </div>
   </div>
-  <div *ngIf="this.localUser.isAdmin === 1">
+  <div *ngIf="localUser">
+    <div *ngIf="this.localUser.isAdmin === 1">
       <div *ngIf="showForm">
-          <form [formGroup]="adminAddNewForm">
-            <div class="mb-3">
-              <textarea class="form-control" formControlName="description" rows="10" cols="40"></textarea>
+        <form [formGroup]="adminAddNewForm">
+          <div class="mb-3">
+            <textarea class="form-control" formControlName="description" rows="10" cols="40"></textarea>
+          </div>
+          <div>
+            <div *ngIf="!singleWorkout">
+              <ion-button type="submit" (click)="addNew()">Add New</ion-button>
             </div>
-            <div>
-              <div *ngIf="!singleWorkout">
-                <ion-button type="submit" (click)="addNew()">Add New</ion-button>
-              </div>
-              <div *ngIf="singleWorkout">
-                <ion-button type="submit" (click)="edit()">Edit Existing</ion-button>
-              </div>
+            <div *ngIf="singleWorkout">
+              <ion-button type="submit" (click)="edit()">Edit Existing</ion-button>
             </div>
-          </form>
+          </div>
+        </form>
       </div>
+    </div>
   </div>
+
+
+
 
 
 </ion-content>

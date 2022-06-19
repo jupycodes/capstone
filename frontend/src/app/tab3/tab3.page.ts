@@ -26,6 +26,9 @@ export class Tab3Page implements OnInit {
   viewSettings(){
     this.navCtrl.navigateForward('settings');
   }
+  editProfile() {
+    console.log('hi');
+  }
   ngOnInit(): void {
   }
 

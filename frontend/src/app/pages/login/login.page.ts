@@ -32,8 +32,11 @@ export class LoginPage implements OnInit {
     });
     this.navCtrl.navigateForward('/tabs/tab1');
   }
-  register() {
-    this.navCtrl.navigateForward('register');
+  goBack() {
+    this.navCtrl.navigateForward('/tabs/tab1');
+  }
+  forgotPass(){
+    console.log("forgot password");
   }
 
 }

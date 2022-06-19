@@ -23,7 +23,7 @@
           {{ classDetails[0].startTime.substring(0,5)}} - {{ classDetails[0].endTime.substring(0,5)}}<br>
         </ion-col>
         <ion-col>
-          <ion-button fill="clear" (click)="register(classDetails[0].classId,user.userId)" class="ion-float-right">Register</ion-button>
+          <ion-button fill="clear" [disabled]="!canRegister()" (click)="register(classDetails[0].classId,user.userId)" class="ion-float-right">Register</ion-button>
         </ion-col>
       </ion-row>
     </ion-card>
@@ -32,7 +32,9 @@
       {{classDetails[0].classType.description}}
     </p>
     <h5>Attendees</h5>
-    <p>Add users registered for class here (will need to import classDate and compare to classDate and classDetails[0].classId on class-reg database</p>
+    <p>
+      <app-attendees [listAttendeeDetails]="listAttendeeDetails"></app-attendees>
+    </p>
   </div>
 
 </ion-content>

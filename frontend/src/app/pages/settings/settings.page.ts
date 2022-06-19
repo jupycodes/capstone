@@ -15,10 +15,11 @@ export class SettingsPage implements OnInit {
   }
   logout() {
     localStorage.clear();
+    this.navCtrl.navigateForward('login');
     console.log('user logged out');
   }
   goBack() {
-    this.navCtrl.navigateBack('/tabs/tab3')
+    this.navCtrl.navigateBack('/tabs/tab3');
   }
   fakeButton(){
     console.log('hi!')

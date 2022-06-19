@@ -1,8 +1,15 @@
 <ion-header [translucent]="false">
   <ion-toolbar>
-    <ion-title>
-      <h2>Store</h2>
-    </ion-title>
+    <ion-row>
+      <ion-col>
+        <div>
+          <h2>Store</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
@@ -75,7 +82,7 @@
         <strong>$0.00</strong>
       </ion-col>
       <ion-col>
-        <ion-button fill="clear" (click)="addToCart('freeTrial', 7,0)" class="ion-float-right">Add to cart</ion-button>
+        <ion-button fill="clear" (click)="addToCart('freeTrial', 0,0)" class="ion-float-right">Add to cart</ion-button>
       </ion-col>
     </ion-row>
   </ion-card>

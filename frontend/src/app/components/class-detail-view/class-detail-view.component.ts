@@ -7,6 +7,7 @@ import {ClassRegService} from "../../services/class-reg.service";
 import {UserService} from "../../services/user.service";
 import {FilterDateService} from "../../services/filter-date.service";
 
+
 @Component({
   selector: 'app-class-detail-view',
   templateUrl: './class-detail-view.component.html',
@@ -18,7 +19,10 @@ export class ClassDetailViewComponent implements OnInit {
   localUser = JSON.parse(localStorage.getItem('currentUser')!);
   user;
   classDate;
-
+  registrations;
+  attendees = [] as any;
+  attendeeDetails;
+  listAttendeeDetails = [] as any;
   constructor(private navCtrl: NavController,
               private classesService: ClassesService,
               private activatedRoute: ActivatedRoute,
@@ -29,7 +33,6 @@ export class ClassDetailViewComponent implements OnInit {
               private filterDateService: FilterDateService) {
     userService.matchCurrentUser(this.localUser.userId).subscribe((results) => {
       this.user = results;
-      // console.log(this.user);
     }, (err) => {
       console.log(err);
     });
@@ -91,6 +94,26 @@ export class ClassDetailViewComponent implements OnInit {
         console.log(err);
       });
     });
+    this.classRegService.listSignUps(this.classId).subscribe((results) => {
+      this.registrations = results;
+      for (const i of this.registrations) {
+        if (i.date === this.classDate) {
+          this.attendees.push(i.userId);
+          console.log(this.attendees);
+        }
+      }
+      for (const i of this.attendees) {
+        this.userService.matchCurrentUser(i).subscribe((result) =>{
+          this.attendeeDetails = result;
+          this.listAttendeeDetails.push(this.attendeeDetails.fName + ' ' + this.attendeeDetails.lName);
+          // console.log(this.listAttendeeDetails)
+        }, (err) => {
+          console.log(err);
+        });
+      }
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   goBack() {
@@ -104,7 +127,6 @@ export class ClassDetailViewComponent implements OnInit {
 
 
   async register(classId, userId) {
-    console.log(this.canRegister());
     if (this.canRegister() === true) {
       if (this.user.membershipType === 'punchPass') {
         this.userService.updateMembership(-1, this.user.membershipType).subscribe(() => {
@@ -123,4 +145,5 @@ export class ClassDetailViewComponent implements OnInit {
       }
     }
   }
+
 }
