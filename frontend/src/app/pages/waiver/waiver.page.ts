@@ -12,11 +12,9 @@ export class WaiverPage implements OnInit {
 
   ngOnInit() {
   }
-  acceptTerms() {
+  okBtn() {
     this.navCtrl.navigateForward('register');
   }
-  cancelButton() {
-    this.navCtrl.navigateForward('register');
-  }
+
 
 }

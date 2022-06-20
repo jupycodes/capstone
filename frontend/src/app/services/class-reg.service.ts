@@ -14,5 +14,7 @@ export class ClassRegService {
   listSignUps(classId) {
     return this.httpClient.get(`http://localhost:3000/classRegistrations/${classId}`);
   }
-
+  cancelReg(classId, userId, date) {
+    return this.httpClient.delete(`http://localhost:3000/classRegistrations/${classId}/${userId}/${date}`);
+  }
 }

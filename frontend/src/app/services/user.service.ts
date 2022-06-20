@@ -28,5 +28,8 @@ export class UserService {
     const data = {activeMembership, membershipType};
     return this.httpClient.patch(`http://localhost:3000/users/${this.getCurrentUser().userId}`,data);
   }
+  editProfile(data){
+    return this.httpClient.patch(`http://localhost:3000/editProfile/${this.getCurrentUser().userId}`,data);
+  }
 
 }

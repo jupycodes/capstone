@@ -1,0 +1,52 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <div >
+          <h2>Edit Profile</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="ion-text-end">
+          <ion-button color='white' (click)="goBack()">Back</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="editForm">
+    <ion-item>
+      <ion-label class="form-label" position="stacked">First Name</ion-label>
+      <ion-input type="text" class="form-control" formControlName="fName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Last Name</ion-label>
+      <ion-input type="text" class="form-control" formControlName="lName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Email address</ion-label>
+      <ion-input type="email" class="form-control" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Phone Number</ion-label>
+      <ion-input type="tel" class="form-control" formControlName="phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Date of Birth</ion-label>
+      <ion-input type="date" class="form-control" formControlName="birthday"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label">Gender</ion-label>
+      <ion-select formControlName="gender" class="form-control">
+        <ion-select-option value="female">Female</ion-select-option>
+        <ion-select-option value="male">Male</ion-select-option>
+        <ion-select-option value="undisclosed">Prefer not to disclose</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <div class="button">
+      <ion-button type="submit" (click)="editProfile()">Save Changes</ion-button>
+    </div>
+  </form>
+</ion-content>

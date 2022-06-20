@@ -38,6 +38,14 @@ const routes: Routes = [
   {
     path: 'waiver',
     loadChildren: () => import('./pages/waiver/waiver.module').then( m => m.WaiverPageModule)
+  },
+  {
+    path: 'edit-profile',
+    loadChildren: () => import('./pages/edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
   }
 ];
 @NgModule({

@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ClassRegService} from "../../services/class-reg.service";
 import {UserService} from "../../services/user.service";
 import {FilterDateService} from "../../services/filter-date.service";
+// import {Calendar} from "@awesome-cordova-plugins/calendar/ngx";
 
 
 @Component({
@@ -30,7 +31,9 @@ export class ClassDetailViewComponent implements OnInit {
               private classRegService: ClassRegService,
               private userService: UserService,
               private alertController: AlertController,
-              private filterDateService: FilterDateService) {
+              private filterDateService: FilterDateService,
+              // private calendar: Calendar
+  ) {
     userService.matchCurrentUser(this.localUser.userId).subscribe((results) => {
       this.user = results;
     }, (err) => {
@@ -54,7 +57,7 @@ export class ClassDetailViewComponent implements OnInit {
         {
           text: 'Cancel',
           handler: () => {
-            console.log('Cancel button was clicked')
+            console.log('Cancel button was clicked');
           }
         },
       ]
@@ -83,6 +86,56 @@ export class ClassDetailViewComponent implements OnInit {
     });
     await alert.present();
   }
+  async alreadyRegisteredAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: 'You are already registered for this class.',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log('Ok button was pressed');
+          }
+        },
+      ]
+    });
+    await alert.present();
+  }
+  async registrationSuccess() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: 'You are now registered for this class!',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log('Ok button was pressed');
+          }
+        },
+      ]
+    });
+    //add to calendar button?
+    await alert.present();
+  }
+  async maxLimitAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Alert',
+      message: 'This class is already full',
+      buttons: [
+        {
+          text: 'Ok',
+          handler: () => {
+            console.log('Ok button was pressed');
+          }
+        },
+      ]
+    });
+    //add to waitlist button?
+    await alert.present();
+  }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -99,7 +152,7 @@ export class ClassDetailViewComponent implements OnInit {
       for (const i of this.registrations) {
         if (i.date === this.classDate) {
           this.attendees.push(i.userId);
-          console.log(this.attendees);
+          // console.log(this.attendees);
         }
       }
       for (const i of this.attendees) {
@@ -127,11 +180,16 @@ export class ClassDetailViewComponent implements OnInit {
 
 
   async register(classId, userId) {
-    if (this.canRegister() === true) {
+    // console.log(this.classDetails[0].classType.maxLimit);
+    // console.log(this.attendees.length);
+    if (this.canRegister() === true
+        && !this.attendees.includes(this.user.userId)
+        && this.attendees.length < this.classDetails[0].classType.maxLimit) {
       if (this.user.membershipType === 'punchPass') {
         this.userService.updateMembership(-1, this.user.membershipType).subscribe(() => {
-          console.log(this.user);
+          // console.log(this.user);
         });
+        // await this.registrationSuccess();
       }
       if (this.user.membershipType === 'none' || (this.user.membershipType === 'punchPass' && this.user.activeMembership === 0)) {
         await this.showAlert();
@@ -139,11 +197,38 @@ export class ClassDetailViewComponent implements OnInit {
         await this.openGymAlert();
       } else {
         this.classRegService.register(classId, userId, this.classDate).subscribe(() => {
-          console.log('user registered');
-          console.log(this.user);
+          // console.log('user registered');
+          // console.log(this.user);
         });
+        await this.registrationSuccess();
       }
     }
+    if (this.attendees.includes(this.user.userId)) {
+      await this.alreadyRegisteredAlert();
+    }
+    if (this.attendees.length === this.classDetails[0].classType.maxLimit) {
+      await this.maxLimitAlert();
+    }
   }
+  cancel(){
+    const userId = this.user.userId;
+    const classId = this.classId;
+    const date = this.classDate;
+    this.classRegService.cancelReg(classId, userId, date).subscribe(() => {
+      console.log({classId, userId, date});
+      console.log('registration cancelled');
+    });
+  }
+  // addEvent() {
+  //   const startDate = new Date(2020, 5, 20, 6, 30, 0);
+  //   const endDate = new Date(2020,5,20,7,30,0);
+  //   const title = 'My nice event';
+  //   const eventLocation = 'Home';
+  //   const notes = 'Some notes about this event.';
+  //   this.calendar.createEvent(title, eventLocation, notes, startDate, endDate).then(
+  //     (msg) => { console.log(msg); },
+  //     (err) => { console.log(err); }
+  //   );
+  // }
 
 }

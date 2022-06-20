@@ -11,6 +11,11 @@
    1. [x] order by date newest to oldest
    2. [x] make sure only user's purchases are visible and not all (filter in index.js)
 9. [ ] settings page
+   1. [x] edit profile 
+   2. [ ] change password 
+   3. [ ] calendar settings (calendar plugin)
+   4. [ ] notification settings (notification plugin)
+   5. [ ] privacy settings (name visible to others when signed up for a class)
 10. [x] order class schedule by start time
 11. [ ] profile add photo
 12. [x] change membership type after a purchase
@@ -24,9 +29,16 @@
     - what initiates a waiver signed? prob when creating a new account
 19. [ ] link class signups to calendar
 20. [x] receipts page back button
-21. [ ] how to view tab menu when on a non-tab page?
-22. [x] register needs to be for a specific date, not just weekday class
+21. [x] register needs to be for a specific date, not just weekday class
     1. [ ] fix bug on page refresh -need to?
-23. [ ] profile page have to refresh to see changes to user membership why?
-24. [ ] new user registration implement validators and disable/enable submit button
-25. [x] mock payment form
+22. [ ] profile page have to refresh to see changes to user membership why?
+23. [ ] new user registration implement validators and disable/enable submit button
+24. [x] mock payment form
+25. [x] style for prefers dark mode
+26. [x] register for class only if space avail
+27. [x] cancel class registration
+28. [ ] admin features
+    1. [ ] edit class details (time, description, type, max limit)
+    2. [ ] add and delete classes
+    3. [ ] cancel single instance of a class
+    4. [ ] change price of purchases

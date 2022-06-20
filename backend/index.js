@@ -7,6 +7,8 @@ const ClassType = require('./Models/ClassType');
 const User = require('./Models/User');
 const Workout = require('./Models/Workout');
 const Purchase = require('./Models/Purchase')
+const multer = require('multer');
+var fileExtension = require('file-extension')
 const cors = require('cors');
 const cron = require('node-cron');
 const bcrypt = require('bcrypt');
@@ -230,12 +232,34 @@ app.delete('/classes/:classId', function(req,res){
         res.send(err);
     });
 });
-app.delete('/classRegistrations/:classId/:userId', function(req,res){ 
-    //will use this route to unregister a user from a class so need to destroy the record if the user Id matches
-    var classId = req.params.classId
-    var userId = req.params.userId //need to call userID somewhere to unregister the correct person
-    ClassRegistration.findByPk(classId).then(function(result){
-        if(result){ //and if the user ID exists
+// app.delete('/classRegistrations/:classId/:userId', function(req,res){
+//     //will use this route to unregister a user from a class so need to destroy the record if the user Id matches
+//     var classId = req.params.classId
+//     var userId = req.params.userId //need to call userID somewhere to unregister the correct person
+//     ClassRegistration.findByPk(classId).then(function(result){
+//         if(result){ //and if the user ID exists
+//             result.destroy().then(function(){
+//                 res.send(result);
+//             }).catch(function(err){
+//                 res.send(err);
+//             });
+//         } else {
+//             res.send('Record not found');
+//         };
+//     }).catch(function(err){
+//         res.send(err);
+//     });
+// });
+app.delete(`/classRegistrations/:classId/:userId/:date`, function (req,res){
+    const date = req.params.date;
+    const userId = req.params.userId;
+    const classId = req.params.classId
+    let data = {
+        where: {date, userId, classId},
+    }
+    ClassRegistration.findOne(data).then(function(result){
+        if(result){
+            console.log(result)
             result.destroy().then(function(){
                 res.send(result);
             }).catch(function(err){
@@ -243,11 +267,12 @@ app.delete('/classRegistrations/:classId/:userId', function(req,res){
             });
         } else {
             res.send('Record not found');
-        };
+        }
     }).catch(function(err){
         res.send(err);
     });
 });
+
 app.delete('/classTypes/:classTypeId', function(req,res){
     var classTypeId = req.params.classTypeId
     ClassType.findByPk(classTypeId).then(function(result){
@@ -468,6 +493,102 @@ app.patch('/users/:userId', function(req,res){
         res.send(err);
     });
 });
+//edit user profile or change password
+app.patch('/editProfile/:userId', function(req,res){
+    var userId = req.params.userId;
+    User.findByPk(userId).then(function(result){
+        if(result){
+            if (req.body.fName !== undefined){
+                result.fName = req.body.fName;
+            }
+            if (req.body.lName !== undefined){
+                result.lName = req.body.lName;
+            }
+            if (req.body.email !== undefined){
+                result.email = req.body.email;
+            }
+            if (req.body.phoneNumber !== undefined){
+                result.phoneNumber = req.body.phoneNumber;
+            }
+            if (req.body.birthday !== undefined){
+                result.birthday = req.body.birthday;
+            }
+            if (req.body.gender !== undefined){
+                result.gender = req.body.gender;
+            }
+            if (req.body.currentPassword !== undefined){
+                let plainCurrent = req.body.currentPassword;
+                let plainNew = req.body.password;
+                bcrypt.compare(plainCurrent, result.password, function(err,output) {
+                    console.log(output);
+                    if (output) {
+                        bcrypt.hash(plainNew, saltRounds, function(err, hash) {
+                            result.password = hash;
+                        })
+                    }
+                });
+            }
+            result.save().then(function(){
+                res.send(result);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('Record does not exist')
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+
+//upload profile image and patch user
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'profileImg')
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.fieldname + '-' + Date.now() + '.' + fileExtension(file.originalname))
+//     }
+// })
+// var upload = multer({
+//     storage: storage,
+//     limits: {
+//         // Setting Image Size Limit to 2MBs
+//         fileSize: 2000000
+//     },
+//     fileFilter(req, file, cb) {
+//         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+//             //Error
+//             cb(new Error('Please upload JPG and PNG images only!'))
+//         }
+//         //Success
+//         cb(undefined, true)
+//     }
+// })
+// app.patch('/uploadImg/:userId', upload.single('uploadedImg'), (req,res,next) => {
+//     const file = req.file;
+//     console.log(req);
+//     if (!file) {
+//         const error = new Error('Please upload a file')
+//         error.httpStatusCode = 400
+//         return next(error)
+//     }
+//     const userId = req.params.userId;
+//     User.findByPk(userId).then(function(result){
+//         if (result) {
+//             result.picture = file
+//             result.save().then(function () {
+//                 // res.send(result);
+//             }).catch(function (err) {
+//                 res.send(err);
+//             });
+//         } else {
+//             res.send('Record does not exist')
+//         }
+//     }).catch(function(err){
+//         res.send(err);
+//     });
+// });
 
 
 

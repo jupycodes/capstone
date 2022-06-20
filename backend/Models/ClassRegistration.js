@@ -27,7 +27,7 @@ const ClassRegistration = config.define("classRegistrations", {
         allowNull: false
     },
     date: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false
     },
 

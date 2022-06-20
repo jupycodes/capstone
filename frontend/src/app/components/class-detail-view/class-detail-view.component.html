@@ -23,7 +23,12 @@
           {{ classDetails[0].startTime.substring(0,5)}} - {{ classDetails[0].endTime.substring(0,5)}}<br>
         </ion-col>
         <ion-col>
-          <ion-button fill="clear" [disabled]="!canRegister()" (click)="register(classDetails[0].classId,user.userId)" class="ion-float-right">Register</ion-button>
+          <div *ngIf="!attendees.includes(user.userId); else cancelBtn">
+            <ion-button fill="clear" [disabled]="!canRegister()" (click)="register(classDetails[0].classId,user.userId)" class="ion-float-right">Register</ion-button>
+          </div>
+          <ng-template #cancelBtn>
+            <ion-button fill="clear" (click)="cancel()" class="ion-float-right">Cancel Registration</ion-button>
+          </ng-template>
         </ion-col>
       </ion-row>
     </ion-card>
@@ -31,10 +36,13 @@
     <p>
       {{classDetails[0].classType.description}}
     </p>
+    <p>Spots available: {{classDetails[0].classType.maxLimit - attendees.length}} (Max {{classDetails[0].classType.maxLimit}})</p>
     <h5>Attendees</h5>
     <p>
       <app-attendees [listAttendeeDetails]="listAttendeeDetails"></app-attendees>
     </p>
   </div>
+<!--  <ion-button fill="clear" (click)="addEvent()" class="ion-float-right">Add to Calendar</ion-button>-->
+
 
 </ion-content>

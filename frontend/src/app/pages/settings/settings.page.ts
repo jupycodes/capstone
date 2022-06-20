@@ -21,7 +21,13 @@ export class SettingsPage implements OnInit {
   goBack() {
     this.navCtrl.navigateBack('/tabs/tab3');
   }
+  editProfile(){
+    this.navCtrl.navigateForward('edit-profile');
+  }
+  changePassword(){
+    this.navCtrl.navigateForward('change-password');
+  }
   fakeButton(){
-    console.log('hi!')
+    console.log('hi')
   }
 }

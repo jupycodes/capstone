@@ -1,14 +1,15 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, OnChanges} from '@angular/core';
 
 @Component({
   selector: 'app-attendees',
   templateUrl: './attendees.component.html',
   styleUrls: ['./attendees.component.scss'],
 })
-export class AttendeesComponent implements OnInit {
+export class AttendeesComponent implements OnChanges {
   @Input() listAttendeeDetails: [];
   constructor() { }
-  ngOnInit() {
+  ngOnChanges() {
+    console.log(this.listAttendeeDetails)
   }
 
 }
