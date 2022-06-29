@@ -9,15 +9,15 @@ export class WorkoutService {
   constructor(private httpClient: HttpClient) { }
 
   getWorkouts() {
-    return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts`);
+    return this.httpClient.get<Iworkouts[]>(`https://capstone-proj-123.herokuapp.com/workouts`);
   }
   getSingleWorkout(date) {
-    return this.httpClient.get<Iworkouts[]>(`http://localhost:3000/workouts/${date}`);
+    return this.httpClient.get<Iworkouts[]>(`https://capstone-proj-123.herokuapp.com/workouts/${date}`);
   }
   createWorkout(formData: object) {
-    return this.httpClient.post<Iworkouts[]>(`http://localhost:3000/workouts`, formData);
+    return this.httpClient.post<Iworkouts[]>(`https://capstone-proj-123.herokuapp.com/workouts`, formData);
   }
   editWorkout(formData, date) {
-    return this.httpClient.patch<Iworkouts[]>(`http://localhost:3000/workouts/${date}`, formData);
+    return this.httpClient.patch<Iworkouts[]>(`https://capstone-proj-123.herokuapp.com/workouts/${date}`, formData);
   }
 }

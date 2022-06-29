@@ -46,7 +46,19 @@ const routes: Routes = [
   {
     path: 'change-password',
     loadChildren: () => import('./pages/change-password/change-password.module').then( m => m.ChangePasswordPageModule)
-  }
+  },
+  {
+    path: 'admin-edit-class',
+    loadChildren: () => import('./pages/admin-edit-class/admin-edit-class.module').then( m => m.AdminEditClassPageModule)
+  },
+  {
+    path: 'admin-add-new-class',
+    loadChildren: () => import('./pages/admin-add-new-class/admin-add-new-class.module').then( m => m.AdminAddNewClassPageModule)
+  },
+  {
+    path: 'admin-add-new-option',
+    loadChildren: () => import('./pages/admin-add-new-option/admin-add-new-option.module').then( m => m.AdminAddNewOptionPageModule)
+  },
 ];
 @NgModule({
   imports: [

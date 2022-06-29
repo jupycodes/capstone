@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {NavController, ToastController} from '@ionic/angular';
 import {PurchaseService} from "../services/purchase.service";
+import {CartOptionServiceService} from "../services/cart-option-service.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tab4',
@@ -11,10 +13,17 @@ export class Tab4Page {
   public purchases = [] as any;
   totalCost;
   localUser = JSON.parse(localStorage.getItem('currentUser')!);
+  cartOptions;
   constructor(private navCtrl: NavController,
               private toastCtrl: ToastController,
-              private purchaseService: PurchaseService) {
-
+              private purchaseService: PurchaseService,
+              private cartOptionService: CartOptionServiceService,
+              private router: Router) {
+    cartOptionService.getCartOptions().subscribe((results) => {
+      this.cartOptions = results;
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   async addToCart(purchase, instances, price) {
@@ -51,5 +60,17 @@ export class Tab4Page {
   //   });
   //   return length;
   // }
+  adminAddNew(){
+    this.navCtrl.navigateForward('admin-add-new-option');
+  }
+  adminDelete(optionId){
+    this.cartOptionService.deleteCartOption(optionId).subscribe(() => {
+      alert('Your changes have been saved.');
+      setTimeout(() => {
+        window.location.reload();
+      });
+      // this.navCtrl.navigateBack(`class-details/${this.classId}`);
+    });
+  }
 
 }

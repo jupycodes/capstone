@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {AlertController, NavController} from "@ionic/angular";
+import {Component, OnInit, Input, ChangeDetectorRef} from '@angular/core';
+import {AlertController, NavController, Platform} from "@ionic/angular";
 import {ClassesService} from "../../services/classes.service";
 import {IClass} from "../../interfaces/iclass";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClassRegService} from "../../services/class-reg.service";
 import {UserService} from "../../services/user.service";
 import {FilterDateService} from "../../services/filter-date.service";
-// import {Calendar} from "@awesome-cordova-plugins/calendar/ngx";
+import {Calendar} from "@ionic-native/calendar/ngx/index";
 
 
 @Component({
@@ -24,6 +24,8 @@ export class ClassDetailViewComponent implements OnInit {
   attendees = [] as any;
   attendeeDetails;
   listAttendeeDetails = [] as any;
+  cancelled = false;
+  calendars =[];
   constructor(private navCtrl: NavController,
               private classesService: ClassesService,
               private activatedRoute: ActivatedRoute,
@@ -32,7 +34,9 @@ export class ClassDetailViewComponent implements OnInit {
               private userService: UserService,
               private alertController: AlertController,
               private filterDateService: FilterDateService,
-              // private calendar: Calendar
+              private calendar: Calendar,
+              private plt: Platform,
+              // private changeRef: ChangeDetectorRef
   ) {
     userService.matchCurrentUser(this.localUser.userId).subscribe((results) => {
       this.user = results;
@@ -40,6 +44,12 @@ export class ClassDetailViewComponent implements OnInit {
       console.log(err);
     });
     this.classDate = filterDateService.sendDate();
+    //adding calendar plugin
+    this.plt.ready().then(()=> {
+      this.calendar.listCalendars().then(data => {
+        this.calendars = data;
+      });
+    });
   }
 
   async showAlert() {
@@ -116,7 +126,6 @@ export class ClassDetailViewComponent implements OnInit {
         },
       ]
     });
-    //add to calendar button?
     await alert.present();
   }
   async maxLimitAlert() {
@@ -133,7 +142,7 @@ export class ClassDetailViewComponent implements OnInit {
         },
       ]
     });
-    //add to waitlist button?
+    //add to waitlist button
     await alert.present();
   }
 
@@ -174,22 +183,28 @@ export class ClassDetailViewComponent implements OnInit {
   }
   canRegister() {
     const classTime = this.classDate + ' ' + this.classDetails[0].startTime;
-    const currentTime = (new Date()).toISOString().substring(0, 10) + ' ' + (new Date()).toTimeString().substring(0, 8);
-    return currentTime < classTime;
+    // const currentTime = (new Date()).toISOString().substring(0, 10) + ' ' + (new Date()).toTimeString().substring(0, 8);
+    const timezoneOffset = (new Date()).getTimezoneOffset()*60000;
+    const localISODateTime = (new Date(Date.now()- timezoneOffset)).toISOString().substring(0,10) + ' ' + (new Date()).toTimeString().substring(0, 8);
+    // console.log(`class time: ${classTime}`);
+    // console.log(`current time: ${currentTime}`);
+    // console.log('timezone offset ' + new Date().getTimezoneOffset())
+    // console.log('date to iso string ' +new Date().toISOString());
+    // console.log('local iso date date ' + localISODateTime)
+    return localISODateTime < classTime;
   }
 
-
   async register(classId, userId) {
-    // console.log(this.classDetails[0].classType.maxLimit);
-    // console.log(this.attendees.length);
     if (this.canRegister() === true
         && !this.attendees.includes(this.user.userId)
         && this.attendees.length < this.classDetails[0].classType.maxLimit) {
       if (this.user.membershipType === 'punchPass') {
         this.userService.updateMembership(-1, this.user.membershipType).subscribe(() => {
-          // console.log(this.user);
+          //set timeout here
+          // setTimeout(() => {
+          //   window.location.reload();
+          // });
         });
-        // await this.registrationSuccess();
       }
       if (this.user.membershipType === 'none' || (this.user.membershipType === 'punchPass' && this.user.activeMembership === 0)) {
         await this.showAlert();
@@ -197,10 +212,15 @@ export class ClassDetailViewComponent implements OnInit {
         await this.openGymAlert();
       } else {
         this.classRegService.register(classId, userId, this.classDate).subscribe(() => {
-          // console.log('user registered');
-          // console.log(this.user);
+          // set timeout here
+          // setTimeout(() => {
+          //   window.location.reload();
+          // });
         });
         await this.registrationSuccess();
+        // setTimeout(() => {
+        //   window.location.reload();
+        // });
       }
     }
     if (this.attendees.includes(this.user.userId)) {
@@ -210,25 +230,36 @@ export class ClassDetailViewComponent implements OnInit {
       await this.maxLimitAlert();
     }
   }
-  cancel(){
+  cancelReg(){
     const userId = this.user.userId;
     const classId = this.classId;
     const date = this.classDate;
     this.classRegService.cancelReg(classId, userId, date).subscribe(() => {
-      console.log({classId, userId, date});
-      console.log('registration cancelled');
+      // set timeout here
+      alert('Class registration is cancelled');
+      // setTimeout(() => {
+      //   window.location.reload();
+      // });
     });
   }
-  // addEvent() {
-  //   const startDate = new Date(2020, 5, 20, 6, 30, 0);
-  //   const endDate = new Date(2020,5,20,7,30,0);
-  //   const title = 'My nice event';
-  //   const eventLocation = 'Home';
-  //   const notes = 'Some notes about this event.';
-  //   this.calendar.createEvent(title, eventLocation, notes, startDate, endDate).then(
-  //     (msg) => { console.log(msg); },
-  //     (err) => { console.log(err); }
-  //   );
-  // }
+  goToEdit() {
+    this.classesService.getClassId(this.classId);
+    this.navCtrl.navigateForward('admin-edit-class');
+  }
+  cancelClass(){
+    this.cancelled = !this.cancelled;
+  }
+  addEvent(cal) {
+    const startDate = new Date(this.classDate + ' ' + this.classDetails[0].startTime);
+    const endDate = new Date(this.classDate + ' ' + this.classDetails[0].endTime);
+    const options = { calendarId: cal.id, firstReminderMinutes: 60};
+    const title = this.classDetails[0].classTypeId.name;
+    const eventLocation = 'Frontier Performance';
+    const notes = '';
+    this.calendar.createEventInteractivelyWithOptions(title, eventLocation, notes, startDate, endDate, options).then(
+      (msg) => { console.log(msg); },
+      (err) => { console.log(err); }
+    );
+  }
 
 }

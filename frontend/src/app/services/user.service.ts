@@ -10,26 +10,26 @@ export class UserService {
   constructor(private httpClient: HttpClient) { }
 
   login(formData: object){
-    return this.httpClient.post('http://localhost:3000/login', formData);
+    return this.httpClient.post('https://capstone-proj-123.herokuapp.com/login', formData);
   }
   register(formData: object){
-    return this.httpClient.post('http://localhost:3000/register', formData);
+    return this.httpClient.post('https://capstone-proj-123.herokuapp.com/register', formData);
   }
   getCurrentUser(){
     return JSON.parse(localStorage.getItem('currentUser')!);
   }
   matchCurrentUser(userId){
-    return this.httpClient.get<IUsers>(`http://localhost:3000/users/${userId}`);
+    return this.httpClient.get<IUsers>(`https://capstone-proj-123.herokuapp.com/users/${userId}`);
   }
   isAuthenticated(){
     return !!this.getCurrentUser();
   }
   updateMembership(activeMembership, membershipType){
     const data = {activeMembership, membershipType};
-    return this.httpClient.patch(`http://localhost:3000/users/${this.getCurrentUser().userId}`,data);
+    return this.httpClient.patch(`https://capstone-proj-123.herokuapp.com/users/${this.getCurrentUser().userId}`,data);
   }
   editProfile(data){
-    return this.httpClient.patch(`http://localhost:3000/editProfile/${this.getCurrentUser().userId}`,data);
+    return this.httpClient.patch(`https://capstone-proj-123.herokuapp.com/editProfile/${this.getCurrentUser().userId}`,data);
   }
 
 }

@@ -16,6 +16,7 @@ export class Tab2Page {
   user;
   showForm = false;
   adminAddNewForm;
+
   constructor(private workoutService: WorkoutService,
               private formBuilder: FormBuilder,
               ) {
@@ -52,27 +53,36 @@ export class Tab2Page {
       console.log(formData);
       this.showForm = !this.showForm;
       alert('New workout was added successfully');
+      setTimeout(() => {
+        window.location.reload();
+      },1000);
     }, (err) => {
       alert('error');
     });
-    window.location.reload();
+    // window.location.reload();
   }
   edit(){
     const formData = this.adminAddNewForm.value;
     const date = this.selectDateForm.value.date;
     this.workoutService.editWorkout(formData, date).subscribe(() => {
       console.log(formData);
+      alert('Your changes have been saved.');
+      setTimeout(() => {
+        window.location.reload();
+      },1000);
     });
-    window.location.reload();
+    // window.location.reload();
   }
   workoutExists() {
     const date = this.selectDateForm.value.date;
     this.workoutService.getSingleWorkout(date).subscribe((results)=> {
       this.singleWorkout = results;
+      // console.log(this.singleWorkout)
     }, (err)=> {
       console.log(err);
     });
     return this.singleWorkout !== undefined;
+    // return this.singleWorkout
   }
 
 }

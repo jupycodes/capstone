@@ -7,7 +7,11 @@
         </div>
       </ion-col>
       <ion-col>
-
+        <div *ngIf="localUser">
+          <div *ngIf="this.localUser.isAdmin === 1" class="ion-text-end">
+            <ion-button color='white' (click)="addNewClass()">Add</ion-button>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
   </ion-toolbar>

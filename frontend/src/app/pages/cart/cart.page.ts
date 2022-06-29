@@ -42,7 +42,11 @@ export class CartPage implements OnInit {
       this.navCtrl.navigateForward('login');
     } else {
       this.userService.updateMembership(activeMembership, membershipType).subscribe(() =>{
-        // console.log(this.paymentForm);
+        this.allPurchases = this.purchaseService.getList([])
+        alert('Success! You may now book a class.');
+        setTimeout(() => {
+          window.location.reload();
+        },1000);
       });
       const date = new Date().toISOString().substring(0, 10);
       this.purchaseService.generatePurchase(this.type, this.totalCost, date, this.localUser.userId).subscribe(() => {

@@ -1,56 +1,62 @@
-<ion-header>
+<ion-header [translucent]="false">
   <ion-toolbar>
     <ion-row>
       <ion-col>
-        <div>
+        <div >
           <h2>Cart</h2>
         </div>
       </ion-col>
       <ion-col>
-
+        <div class="ion-text-end">
+          <ion-button color='white' (click)="goBack()">Back</ion-button>
+        </div>
       </ion-col>
     </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button fill="clear" (click)="goBack()">Back</ion-button>
   <div *ngFor="let i of allPurchases">
     <ion-card>
-      Type: {{i.purchase}}<br>
-      Cost: ${{i.price}}.00<br>
-      <ion-button fill="clear" (click)="deletePurchase(allPurchases.indexOf(i))">Delete</ion-button>
+      <ion-row>
+        <ion-col>
+          Type: {{i.purchase}}<br>
+          <strong>Cost: ${{i.price}}.00</strong><br>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="clear" (click)="deletePurchase(allPurchases.indexOf(i))" class="ion-float-right">Delete</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card>
   </div>
   <div>
-    Total: ${{totalCost}}.00
+    <h5>Payment amount</h5>
+    <p class="totalCost">${{totalCost}}.00</p>
+  </div>
+  <form [formGroup]="paymentForm">
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Name on card</ion-label>
+      <ion-input type="text" class="form-control" formControlName="name" placeholder="John Smith"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Card number</ion-label>
+      <ion-input formControlName="cardNumber" type="tel" inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Expiry date</ion-label>
+      <ion-input type="text" class="form-control" formControlName="expiry" placeholder="MMYY"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">CVV</ion-label>
+      <ion-input type="text" class="form-control" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">ZIP/Postal Code</ion-label>
+      <ion-input type="text" class="form-control" formControlName="postalCode" placeholder="A1A 1A1"></ion-input>
+    </ion-item>
+  </form>
+  <div class="payBtn">
+    <ion-button (click)="processPayment(this.totalInstances, this.type)">Pay Now</ion-button>
   </div>
 
-  <form [formGroup]="paymentForm">
-    <div class="mb-3">
-      <label class="form-label">Name on card</label>
-      <input type="text" class="form-control" formControlName="name">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Card number</label>
-      <input type="text" class="form-control" formControlName="cardNumber">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Expiry date</label>
-      <input type="text" class="form-control" formControlName="expiry">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Security Code</label>
-      <input type="text" class="form-control" formControlName="securityCode">
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">ZIP/Postal Code</label>
-      <input type="text" class="form-control" formControlName="postalCode">
-    </div>
-  </form>
-  <ion-button fill="clear" [disabled]="!paymentForm.valid" (click)="processPayment(this.totalInstances, this.type)">Pay Now</ion-button>
 </ion-content>

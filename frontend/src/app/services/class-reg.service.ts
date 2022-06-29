@@ -9,12 +9,12 @@ export class ClassRegService {
   constructor(private httpClient: HttpClient) { }
   register(classId, userId, date) {
     const data = {classId, userId, date};
-    return this.httpClient.post(`http://localhost:3000/classRegistrations`, data);
+    return this.httpClient.post(`https://capstone-proj-123.herokuapp.com/classRegistrations`, data);
   }
   listSignUps(classId) {
-    return this.httpClient.get(`http://localhost:3000/classRegistrations/${classId}`);
+    return this.httpClient.get(`https://capstone-proj-123.herokuapp.com/classRegistrations/${classId}`);
   }
   cancelReg(classId, userId, date) {
-    return this.httpClient.delete(`http://localhost:3000/classRegistrations/${classId}/${userId}/${date}`);
+    return this.httpClient.delete(`https://capstone-proj-123.herokuapp.com/classRegistrations/${classId}/${userId}/${date}`);
   }
 }

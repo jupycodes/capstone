@@ -10,11 +10,11 @@ export class PurchaseService {
   constructor(private httpClient: HttpClient) { }
 
   getPurchases(userId) {
-    return this.httpClient.get<IPurchases>(`http://localhost:3000/purchases/${userId}`);
+    return this.httpClient.get<IPurchases>(`https://capstone-proj-123.herokuapp.com/purchases/${userId}`);
   }
   generatePurchase(type, price, date, userId) {
     const data = {type, price, date, userId};
-    return this.httpClient.post('http://localhost:3000/purchases', data);
+    return this.httpClient.post('https://capstone-proj-123.herokuapp.com/purchases', data);
   }
   getList(value) {
     this.cartList = value;

@@ -3,6 +3,7 @@ import { ClassesService } from '../services/classes.service';
 import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
 import {ClassTypeService} from "../services/class-type.service";
 import {FilterDateService} from "../services/filter-date.service";
+import {NavController} from "@ionic/angular";
 
 
 @Component({
@@ -19,10 +20,12 @@ export class Tab1Page implements OnDestroy {
   selectClassTypeForm: FormGroup =new FormGroup({
     classType: new FormControl('all')
   });
+  localUser = JSON.parse(localStorage.getItem('currentUser')!);
   constructor(private classesService: ClassesService,
               private classTypeService: ClassTypeService,
               private formBuilder: FormBuilder,
-              private filterDateService: FilterDateService) {
+              private filterDateService: FilterDateService,
+              private navCtrl: NavController) {
     this.filterDate = new Date().toISOString().substring(0, 10);
     // console.log(this.filterDate);
     filterDateService.getDate(this.filterDate);
@@ -67,6 +70,9 @@ export class Tab1Page implements OnDestroy {
       // console.log(this.filterDate);
       this.filterDateService.getDate(this.filterDate);
     });
+  }
+  addNewClass(){
+    this.navCtrl.navigateForward('admin-add-new-class');
   }
 
 

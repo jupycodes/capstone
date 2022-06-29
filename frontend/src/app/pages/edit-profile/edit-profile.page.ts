@@ -30,6 +30,9 @@ export class EditProfilePage implements OnInit {
     const formData = this.editForm.value;
     this.userService.editProfile(formData).subscribe((result) => {
       alert('Your changes have been saved.');
+      setTimeout(() => {
+        window.location.reload();
+      });
     }, (err) => {
       alert('There was an error while saving your changes.');
       console.log(err);

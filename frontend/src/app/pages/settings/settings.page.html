@@ -17,12 +17,17 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-button fill="clear" (click)="fakeButton()">Notification Settings</ion-button><br>
+<ion-item>
+  Preferences
+</ion-item>
+  <ion-button fill="clear" (click)="fakeButton()">Push Notifications*</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Privacy Settings*</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Calendar Settings*</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Communications*</ion-button><br>
+  <ion-item>Profile</ion-item>
   <ion-button fill="clear" (click)="editProfile()">Edit Profile</ion-button><br>
-  <ion-button fill="clear" (click)="changePassword()">Change Password</ion-button><br>
-  <ion-button fill="clear" (click)="fakeButton()">Calendar Settings</ion-button><br>
-  <ion-button fill="clear" (click)="fakeButton()">Privacy Settings</ion-button><br>
+  <ion-button fill="clear" (click)="changePassword()">Change Password*</ion-button><br>
+  <ion-button fill="clear" (click)="fakeButton()">Payment Details*</ion-button><br>
   <ion-button fill="clear" (click)="logout()">Logout</ion-button><br>
 
 </ion-content>

@@ -8,6 +8,6 @@ export class ClassTypeService {
 
   constructor(private httpClient: HttpClient) { }
   getClassType() {
-    return this.httpClient.get<IClassType[]>('http://localhost:3000/classType');
+    return this.httpClient.get<IClassType[]>('https://capstone-proj-123.herokuapp.com/classType');
   }
 }

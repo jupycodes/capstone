@@ -1,0 +1,43 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <div >
+          <h2>Add Class</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="ion-text-end">
+          <ion-button color='white' (click)="goBack()">Back</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>Add new class occurrence:</p>
+  <form [formGroup]="addNewForm">
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Start time</ion-label>
+      <ion-input type="time" class="form-control" formControlName="startTime"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">End time</ion-label>
+      <ion-input type="time" class="form-control" formControlName="endTime"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Day</ion-label>
+      <ion-input type="text" class="form-control" formControlName="day"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="form-label" position="stacked">Class Type</ion-label>
+      <select class="form-control" formControlName="classTypeId">
+        <option *ngFor="let classType of classTypes" [value]="classType.classTypeId">{{classType.name}}</option>
+      </select>
+    </ion-item>
+    <p class="button">
+      <ion-button type="submit" (click)="postClass()">Save</ion-button>
+    </p>
+  </form>
+</ion-content>

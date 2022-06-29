@@ -12,7 +12,6 @@
             <ion-button color='white' (click)="showAddForm()">Edit</ion-button>
           </div>
         </div>
-
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -35,10 +34,10 @@
             <textarea class="form-control" formControlName="description" rows="10" cols="40"></textarea>
           </div>
           <div>
-            <div *ngIf="!singleWorkout">
+            <div *ngIf="!this.singleWorkout">
               <ion-button type="submit" (click)="addNew()">Add New</ion-button>
             </div>
-            <div *ngIf="singleWorkout">
+            <div *ngIf="this.singleWorkout">
               <ion-button type="submit" (click)="edit()">Edit Existing</ion-button>
             </div>
           </div>
@@ -46,9 +45,4 @@
       </div>
     </div>
   </div>
-
-
-
-
-
 </ion-content>

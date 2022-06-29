@@ -1,10 +1,10 @@
-const environment = process.env.NODE_ENV || "development";//production or development
+const environment = process.env.NODE_ENV || "production";//production or development
 
 if(environment === "production") {
-    host = '';
-    database = '';
-    username = '';
-    password= '';
+    host = 'acw2033ndw0at1t7.cbetxkdyhwsb.us-east-1.rds.amazonaws.com';
+    database = 'j5vsbyhni06zs8op';
+    username = 'vexvwjrb7h0ge673';
+    password= 'nbobetxbd54bfs0v';
 } else {
     host = 'localhost';
     database = "capstone";

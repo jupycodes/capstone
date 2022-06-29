@@ -6,7 +6,8 @@ const ClassRegistration = require('./Models/ClassRegistration');
 const ClassType = require('./Models/ClassType');
 const User = require('./Models/User');
 const Workout = require('./Models/Workout');
-const Purchase = require('./Models/Purchase')
+const Purchase = require('./Models/Purchase');
+const CartOption = require('./Models/CartOptions');
 const multer = require('multer');
 var fileExtension = require('file-extension')
 const cors = require('cors');
@@ -104,6 +105,13 @@ app.get('/classes', function(req,res){
         res.send(err);
     });
 });
+app.get('/cartOptions', function(req,res){
+    CartOption.findAll().then(function(result){
+        res.send(result);
+    }).catch(function(err){
+        res.send(err);
+    });
+});
 app.get('/classes/:classId', function(req,res){
     let classId = req.params.classId
     let data = {
@@ -179,8 +187,15 @@ app.get('/workouts', function(req,res){
 
 //Post Routes
 app.post('/classes', function(req,res){
-    Class.create(req.body).then(function(Result){
-        res.redirect('/classes');
+    Class.create(req.body).then(function(result){
+        res.send(result);
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+app.post('/cartOptions', function(req,res){
+    CartOption.create(req.body).then(function(result){
+        res.send(result);
     }).catch(function(err){
         res.send(err);
     });
@@ -192,6 +207,7 @@ app.post('/classRegistrations', function(req,res){
         res.send(err);
     });
 });
+//is this being used anywhere in app?
 app.post('/classTypes', function(req,res){
     ClassType.create(req.body).then(function(Result){
         res.redirect('/classTypes');
@@ -216,22 +232,7 @@ app.post('/workouts', function(req,res){
 });
 
 //DELETE Routes
-app.delete('/classes/:classId', function(req,res){
-    var classId = req.params.classId
-    Class.findByPk(classId).then(function(result){
-        if(result){
-            result.destroy().then(function(){
-                res.send(result);
-            }).catch(function(err){
-                res.send(err);
-            });
-        } else {
-            res.send('Record not found');
-        };
-    }).catch(function(err){
-        res.send(err);
-    });
-});
+
 // app.delete('/classRegistrations/:classId/:userId', function(req,res){
 //     //will use this route to unregister a user from a class so need to destroy the record if the user Id matches
 //     var classId = req.params.classId
@@ -337,36 +338,6 @@ app.delete('/workouts/:workoutId', function(req,res){
         res.send(err);
     });
 });
-
-//EDIT a record (sample)
-app.patch('/classes/:classId', function(req,res){
-    var classId = req.params.classId;
-    Class.findByPk(classId).then(function(result){
-        if(result){
-            if (req.body.startTime !== undefined){
-                result.startTime = req.body.startTime;
-            }
-            if (req.body.endTime !== undefined){
-                result.endTime = req.body.endTime;
-            }
-            if (req.body.day !== undefined){
-                result.day = req.body.day;
-            }
-            if (req.body.classTypeId !== undefined){
-                result.classTypeId = req.body.classTypeId;
-            }
-            result.save().then(function(){
-                res.send(result);
-            }).catch(function(err){
-                res.send(err);
-            });
-        } else {
-            res.send('Record does not exist')
-        }
-    }).catch(function(err){
-        res.send(err);
-    });
-});
 //edit workout details (admin users only)
 app.patch('/workouts/:date',function(req,res){
     const date = req.params.date
@@ -393,6 +364,69 @@ app.patch('/workouts/:date',function(req,res){
         res.send(err);
     });
 })
+//edit class details (admin users only)
+app.patch('/editClass/:classId', function (req,res) {
+    const classId = req.params.classId;
+    Class.findByPk(classId).then(function(result){
+        if (result) {
+            if (req.body.startTime !== null) {
+                result.startTime = req.body.startTime;
+            }
+            if (req.body.endTime !== null) {
+                result.endTime = req.body.endTime;
+            }
+            if (req.body.day !== null) {
+                result.day = req.body.day;
+            }
+            if (req.body.classTypeId !== null) {
+                result.classTypeId = req.body.classTypeId;
+            }
+            result.save().then(function(){
+                res.send(result);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('Record does not exist')
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+//delete a class (admin users only)
+app.delete('/classes/:classId', function(req,res){
+    var classId = req.params.classId
+    Class.findByPk(classId).then(function(result){
+        if(result){
+            result.destroy().then(function(){
+                res.send(result);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('Record not found');
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+});
+//delete a cart option (admin only)
+app.delete('/cartOptions/:cartId', function(req,res){
+    var cartId = req.params.cartId
+    CartOption.findByPk(cartId).then(function(result){
+        if(result){
+            result.destroy().then(function(){
+                res.send(result);
+            }).catch(function(err){
+                res.send(err);
+            });
+        } else {
+            res.send('Record not found');
+        }
+    }).catch(function(err){
+        res.send(err);
+    });
+});
 //get single workout by date
 app.get('/workouts/:date',function(req,res){
     const date = req.params.date
@@ -482,7 +516,7 @@ app.patch('/users/:userId', function(req,res){
                 }
             }
             result.save().then(function () {
-                // res.send(result);
+                res.send(result);
             }).catch(function (err) {
                 res.send(err);
             });
@@ -495,7 +529,7 @@ app.patch('/users/:userId', function(req,res){
 });
 //edit user profile or change password
 app.patch('/editProfile/:userId', function(req,res){
-    var userId = req.params.userId;
+    const userId = req.params.userId;
     User.findByPk(userId).then(function(result){
         if(result){
             if (req.body.fName !== undefined){
@@ -516,6 +550,7 @@ app.patch('/editProfile/:userId', function(req,res){
             if (req.body.gender !== undefined){
                 result.gender = req.body.gender;
             }
+            //new password hash is not saving to database, why?
             if (req.body.currentPassword !== undefined){
                 let plainCurrent = req.body.currentPassword;
                 let plainNew = req.body.password;
@@ -524,6 +559,7 @@ app.patch('/editProfile/:userId', function(req,res){
                     if (output) {
                         bcrypt.hash(plainNew, saltRounds, function(err, hash) {
                             result.password = hash;
+                            console.log(hash)
                         })
                     }
                 });

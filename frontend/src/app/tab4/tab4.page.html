@@ -7,7 +7,11 @@
         </div>
       </ion-col>
       <ion-col>
-
+        <div *ngIf="localUser">
+          <div *ngIf="this.localUser.isAdmin === 1" class="ion-text-end">
+            <ion-button color='white' (click)="adminAddNew()">Add</ion-button>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
   </ion-toolbar>
@@ -20,71 +24,89 @@
     </ion-button>
 <!--    <div *ngIf="this.totalCost" style="align-self: center;"><strong>Cart Total: ${{totalCost}}.00</strong></div>-->
   </ion-row>
-  <ion-card>
+  <ion-card *ngFor="let option of cartOptions">
     <ion-row>
       <ion-col>
-        Single Drop-in<br>
-        <strong>$20.00</strong>
+        {{option.name}}<br>
+        <strong>${{option.price}}.00</strong>
       </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('punchPass', 1,20)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
+      <ion-row>
+        <ion-col *ngIf="localUser">
+          <div *ngIf="this.localUser.isAdmin === 1">
+            <ion-button  class="ion-float-right" fill="clear" (click)="adminDelete(option.cartId)"><ion-icon name="trash-outline"></ion-icon></ion-button>
+          </div>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="clear" (click)="addToCart(option.purchaseType, option.instances,option.price)" class="ion-float-right">Add to cart</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-row>
   </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        5 Class Pass<br>
-        <strong>$90.00</strong>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('punchPass', 5,90)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        10 Class Pass<br>
-        <strong>$165.00</strong>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('punchPass', 10,165)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        1 Month Unlimited<br>
-        <strong>$185.00</strong>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('unlimited',0, 185)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        1 Month Unlimited (Open Gym Only)<br>
-        <strong>$130.00</strong>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('openGym',0, 185)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card>
-    <ion-row>
-      <ion-col>
-        1 Week Free Trial (First timers only)<br>
-        <strong>$0.00</strong>
-      </ion-col>
-      <ion-col>
-        <ion-button fill="clear" (click)="addToCart('freeTrial', 0,0)" class="ion-float-right">Add to cart</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-card>
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        Single Drop-in<br>-->
+<!--        <strong>$20.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('punchPass', 1,20)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        5 Class Pass<br>-->
+<!--        <strong>$90.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('punchPass', 5,90)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        10 Class Pass<br>-->
+<!--        <strong>$165.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('punchPass', 10,165)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        1 Month Unlimited<br>-->
+<!--        <strong>$185.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('unlimited',0, 185)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        1 Month Unlimited (Open Gym Only)<br>-->
+<!--        <strong>$130.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('openGym',0, 185)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
+<!--  <ion-card>-->
+<!--    <ion-row>-->
+<!--      <ion-col>-->
+<!--        1 Week Free Trial (First timers only)<br>-->
+<!--        <strong>$0.00</strong>-->
+<!--      </ion-col>-->
+<!--      <ion-col>-->
+<!--        <ion-button fill="clear" (click)="addToCart('freeTrial', 0,0)" class="ion-float-right">Add to cart</ion-button>-->
+<!--      </ion-col>-->
+<!--    </ion-row>-->
+<!--  </ion-card>-->
 
 </ion-content>

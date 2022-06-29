@@ -1,0 +1,46 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-row>
+      <ion-col>
+        <div >
+          <h2>Add Purchase</h2>
+        </div>
+      </ion-col>
+      <ion-col>
+        <div class="ion-text-end">
+          <ion-button color='white' (click)="goBack()">Back</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p>Add new purchase option:</p>
+  <form [formGroup]="addNewForm">
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Title</ion-label>
+      <ion-input type="text" class="form-control" formControlName="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Price ($CAD)</ion-label>
+      <ion-input type="number" class="form-control" formControlName="price"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="form-label" position="stacked">Number of uses (0 for unlimited)</ion-label>
+      <ion-input type="number" class="form-control" formControlName="instances"></ion-input>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label class="form-label" position="stacked">Purchase type</ion-label>
+      <select class="form-control" formControlName="purchaseType">
+        <option value="unlimited">Unlimited - all</option>
+        <option value="openGym">Unlimited - Open Gym</option>
+        <option value="punchPass">Punch Pass</option>
+        <option value="freeTrial">Free trial</option>
+      </select>
+    </ion-item>
+    <p class="button">
+      <ion-button type="submit" (click)="postOption()">Save</ion-button>
+    </p>
+  </form>
+</ion-content>

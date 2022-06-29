@@ -29,6 +29,7 @@ export class ChangePasswordPage implements OnInit {
   ngOnInit() {
   }
   changePassword() {
+    // console.log(this.localUser.password)
     const formData = {password: this.editForm.value.password};
     if (this.localUser.password === this.editForm.value.currentPassword){
       this.userService.editProfile(formData).subscribe((result) => {

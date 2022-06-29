@@ -39,7 +39,7 @@ export class RegisterPage implements OnInit {
       alert('Registration failed');
       console.log(err);
     });
-    this.navCtrl.back();
+    this.navCtrl.navigateForward('login');
   }
   goBack(){
     this.navCtrl.navigateBack('login');

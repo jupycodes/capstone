@@ -6,6 +6,7 @@ import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+// import {Calendar} from "@awesome-cordova-plugins/calendar";
 // import {ClassDetailViewComponent} from "../components/class-detail-view/class-detail-view.component";
 
 @NgModule({
@@ -15,7 +16,8 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
         FormsModule,
         ExploreContainerComponentModule,
         Tab1PageRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        // Calendar
     ],
   declarations: [Tab1Page]
 })
