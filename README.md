@@ -1,3 +1,8 @@
+Client management & class booking software for fitness industry
+
+
+*Features, bugs, and task list*
+
 1. [x] create class item component which will be shown in a list on tab 1
 2. [x] create a date filter
 3. [x] class type filter
